@@ -4,7 +4,6 @@ beforeEach(function () {
     $this->event = \App\Models\Event::factory()->create();
 });
 
-
 test('events have a name', function () {
 
     expect($this->event->name)->toBeString();
