@@ -4,6 +4,7 @@
 use App\Models\Event;
 use App\Models\User;
 use Illuminate\Testing\Fluent\AssertableJson;
+use Spatie\Permission\Models\Permission;
 
 uses(Tests\TestCase::class)->in('Feature');
 
@@ -25,7 +26,11 @@ test('guest can retrieve single event', function () {
 });
 
 test('user can create event', function () {
+
+    Permission::create(['guard_name' => 'web', 'name' => 'create events']);
     $user = User::factory()->create();
+    $user->givePermissionTo('create events');
+    $this->actingAs($user);
     $data = [
         'name' => fake()->sentence,
         'description' => fake()->paragraph,
@@ -40,6 +45,21 @@ test('user can create event', function () {
         'description' => $data['description'],
         'date' => $data['date']
     ]);
+});
+
+test('user can NOT create event', function () {
+
+    Permission::create(['guard_name' => 'web', 'name' => 'create events']);
+    $user = User::factory()->create();
+    $this->actingAs($user);
+    $data = [
+        'name' => fake()->sentence,
+        'description' => fake()->paragraph,
+        'date' => fake()->date,
+        'user_id' => $user->id
+    ];
+    $response = $this->post('/api/events', $data);
+    $this->assertEquals(401, $response->getStatusCode());
 });
 
 test('user can update event', function () {
