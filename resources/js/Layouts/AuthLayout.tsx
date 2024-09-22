@@ -7,9 +7,9 @@ export default function Auth({
     children: React.ReactNode;
 }) {
     return (
-        <div className={"container mx-auto p-4"}>
+        <div className={"container mx-auto p-4"} id={"below"}>
             <NavBar auth={auth} />
-            <div>{children}</div>
+            <div id={"content"}>{children}</div>
         </div>
     );
 }

@@ -9,11 +9,11 @@ export default defineConfig({
             "ziggy-js": path.resolve("vendor/tightenco/ziggy/dist/vue.es.js"),
         },
     },
-    ssr: "resources/js/ssr.js",
     refresh: true,
     plugins: [
         laravel({
             input: ["resources/js/app.jsx"],
+            ssr: "resources/js/ssr.jsx",
             refresh: true,
         }),
         react(),

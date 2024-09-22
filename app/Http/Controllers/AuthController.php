@@ -46,7 +46,6 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-
         if (auth()->attempt($credentials)) {
             $token = $user->createToken('apiToken')->plainTextToken;
             $response = [
@@ -56,14 +55,16 @@ class AuthController extends Controller
             $request->session()->regenerate();
             return redirect()->intended(route('welcome', absolute: false));
         }
-        return \Inertia\Inertia::render('About', []);
+        return redirect('/login')->withErrors(['email' => 'Invalid Login Credentials']);
     }
 
     public function logout(Request $request)
     {
-        auth()->user()->tokens()->delete();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        if (auth()->check()) {
+            auth()->user()->tokens()->delete();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+        }
 
         if($request->wantsJson()) {
             return response(['message' => 'Logged out'], 200);

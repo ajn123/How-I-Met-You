@@ -21,6 +21,7 @@ export default function Login({ auth }) {
                     onSubmit={submit}
                 >
                     <h1 className="text-2xl font-bold pb-2">Login</h1>
+                    {errors.email && <div>{errors.email}</div>}
                     <div className="flex flex-row items-center">
                         <label className="mr-2" htmlFor="email">
                             Email:
