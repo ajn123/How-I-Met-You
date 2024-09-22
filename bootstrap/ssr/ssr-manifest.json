@@ -1,0 +1,24 @@
+{
+  "node_modules/laravel-vite-plugin/inertia-helpers/index.js": [],
+  "resources/css/app.css": [],
+  "resources/js/Components/NavBar.tsx": [
+    "/build/assets/AuthLayout-BmbOURQs.js"
+  ],
+  "resources/js/Layouts/AuthLayout.tsx": [
+    "/build/assets/AuthLayout-BmbOURQs.js"
+  ],
+  "resources/js/Pages/About.tsx": [
+    "/build/assets/About-DGZgMkDz.js"
+  ],
+  "resources/js/Pages/Login.tsx": [
+    "/build/assets/Login-CNIKIMZy.js"
+  ],
+  "resources/js/Pages/SignUp.tsx": [
+    "/build/assets/SignUp-K759s2HM.js"
+  ],
+  "resources/js/Pages/Welcome.tsx": [
+    "/build/assets/Welcome-DOpcTea5.js"
+  ],
+  "resources/js/app.jsx": [],
+  "resources/js/bootstrap.js": []
+}

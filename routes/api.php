@@ -10,6 +10,7 @@ Route::get('/user', function (Request $request) {
 
 Route::apiResource('events', App\Http\Controllers\EventsController::class);
 
+
 Route::post('/tokens/create', function (Request $request) {
     $token = $request->user()->createToken($request->token_name);
 
