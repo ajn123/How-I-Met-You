@@ -1,5 +1,6 @@
 import { jsx, jsxs } from "react/jsx-runtime";
-import { A as Auth } from "./AuthLayout-BmbOURQs.js";
+import { A as Auth } from "./AuthLayout-CBZACgQ8.js";
+import "@inertiajs/react";
 function About() {
   return /* @__PURE__ */ jsx(Auth, { children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center p-4 bg-white rounded-lg shadow-lg", children: [
     /* @__PURE__ */ jsx("h1", { className: "text-3xl font-bold", children: "About" }),

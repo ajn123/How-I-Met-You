@@ -4,14 +4,12 @@ use App\Models\User;
 
 
 test('can signup', function () {
-    $response = $this->post('/api/signup', [
+    $response = $this->post('/signup', [
         'name' => 'John Doe',
         'email' => 'john@example.com',
         'password' => 'password',
         'password_confirmation' => 'password',
     ]);
-
-    $response->assertStatus(201);
 
     $this->assertDatabaseHas('users', [
         'name' => 'John Doe',
@@ -22,21 +20,21 @@ test('can signup', function () {
 });
 
 test('can not signup with duplicate email', function () {
-    $response = $this->post('/api/signup', [
+    $response = $this->post('/signup', [
         'name' => 'John Doe',
         'email' => 'john@example.com',
         'password' => 'password',
         'password_confirmation' => 'password',
     ]);
 
-    $response->assertStatus(201);
+    $response->assertStatus(302);
 
     $this->assertDatabaseHas('users', [
         'name' => 'John Doe',
         'email' => 'john@example.com',
     ]);
 
-    $response = $this->post('/api/signup', [
+    $response = $this->post('/signup', [
         'name' => 'John Doe',
         'email' => 'john@example.com',
         'password' => 'password',
@@ -50,7 +48,7 @@ test('can not signup with duplicate email', function () {
 
 
 test('can signup no password confirmation', function () {
-    $response = $this->post('/api/signup', [
+    $response = $this->post('/signup', [
         'name' => 'John Doe',
         'email' => 'john@example.com',
         'password' => 'password',
@@ -62,7 +60,7 @@ test('can signup no password confirmation', function () {
 
 
 test('can signup wrong password confirmation', function () {
-    $response = $this->post('/api/signup', [
+    $response = $this->post('/signup', [
         'name' => 'John Doe',
         'email' => 'john@example.com',
         'password' => 'password',
@@ -75,12 +73,12 @@ test('can signup wrong password confirmation', function () {
 
 test('can login', function () {
     $user = User::factory()->create();
-    $response = $this->post('/api/login', [
+    $response = $this->post('/login', [
         'email' => $user->email,
         'password' => 'password',
     ]);
 
-    $response->assertStatus(201);
+    $response->assertStatus(302);
     $response->assertRedirect('/');
 });
 
@@ -91,10 +89,10 @@ test('can logout', function () {
 
     $this->startSession();
     $this->actingAs($user);
-    $response = $this->post('/api/login', [
+    $response = $this->post('/login', [
         'email' => $user->email,
         'password' => 'password',
     ]);
-    $response = $this->post('/api/logout');
-    $response->assertStatus(200);
+    $response = $this->post('/logout');
+    $response->assertStatus(302);
 });

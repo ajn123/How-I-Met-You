@@ -24,11 +24,7 @@ createServer((page) =>
                     location: new URL(page.props.ziggy.location),
                 });
 
-            return (
-                <StrictMode>
-                    <App {...props} />
-                </StrictMode>
-            );
+            return <App {...props} />;
         },
     }),
 );

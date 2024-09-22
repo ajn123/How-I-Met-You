@@ -16,20 +16,11 @@ createInertiaApp({
         ),
     setup({ el, App, props }) {
         if (import.meta.env.DEV) {
-            createRoot(el).render(
-                <StrictMode>
-                    <App {...props} />
-                </StrictMode>,
-            );
+            createRoot(el).render(<App {...props} />);
             return;
         }
 
-        hydrateRoot(
-            el,
-            <StrictMode>
-                <App {...props} />
-            </StrictMode>,
-        );
+        hydrateRoot(el, <App {...props} />);
     },
     progress: {
         color: "#4B5563",

@@ -10,7 +10,7 @@ use Illuminate\Http\Response;
 class AuthController extends Controller
 {
 
-    public function signup(Request $request): \Inertia\Response
+    public function signup(Request $request): \Illuminate\Http\RedirectResponse
     {
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -29,7 +29,11 @@ class AuthController extends Controller
             'token' => $token
         ];
 
-        return \Inertia\Inertia::render('Welcome', []);
+        if ($request->wantsJson()) {
+            return $request->json($response, 201);
+        }
+
+        return redirect()->intended(route('welcome', absolute: false));
     }
 
     public function login(Request $request)
@@ -38,6 +42,7 @@ class AuthController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
+
 
         $user = User::where('email', $request->email)->first();
 
@@ -51,7 +56,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
             return redirect()->intended(route('welcome', absolute: false));
         }
-        return \Inertia\Inertia::render('About', []);;
+        return \Inertia\Inertia::render('About', []);
     }
 
     public function logout(Request $request)
@@ -59,6 +64,11 @@ class AuthController extends Controller
         auth()->user()->tokens()->delete();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
+        if($request->wantsJson()) {
+            return response(['message' => 'Logged out'], 200);
+        }
+
         return redirect()->intended(route('welcome', absolute: false));
     }
 }
