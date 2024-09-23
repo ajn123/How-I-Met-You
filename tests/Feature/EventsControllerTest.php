@@ -8,15 +8,18 @@ use Spatie\Permission\Models\Permission;
 uses(Tests\TestCase::class)->in('Feature');
 
 test('guest can retrieve all events', function () {
+
+    $user = User::factory()->create();
     Event::factory()->count(5)->create();
-    $response = $this->get('/api/events');
+    $response = $this->actingAs($user)->get('/api/events');
     $response->assertOk();
     $response->assertJsonCount(5);
 });
 
 test('guest can retrieve single event', function () {
     $event = Event::factory()->create();
-    $response = $this->get('/api/events/'.$event->id);
+    $user = User::factory()->create();
+    $response = $this->actingAs($user)->get('/api/events/'.$event->id);
     $response->assertOk();
     $response->assertJson(fn (AssertableJson $json) => $json->where('name', $event->name)->where('description', $event->description)
         ->etc()
@@ -46,18 +49,21 @@ test('user can create event', function () {
 });
 
 test('user can NOT create event', function () {
-
     Permission::create(['guard_name' => 'web', 'name' => 'create events']);
     $user = User::factory()->create();
-    $this->actingAs($user);
     $data = [
         'name' => fake()->sentence,
         'description' => fake()->paragraph,
         'date' => fake()->date,
         'user_id' => $user->id,
     ];
-    $response = $this->post('/api/events', $data);
+    $response = $this->actingAs($user)->post('/api/events', $data);
     $this->assertEquals(401, $response->getStatusCode());
+    $this->assertDatabaseMissing('events', [
+        'name' => $data['name'],
+        'description' => $data['description'],
+        'date' => $data['date'],
+    ]);
 });
 
 test('user can update event', function () {

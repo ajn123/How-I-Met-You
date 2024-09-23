@@ -17,3 +17,7 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::inertia('/about', 'About')->name('about');
+
+Route::group(['middleware' => ['web']], function () {
+    // your routes here
+});

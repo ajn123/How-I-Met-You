@@ -1,5 +1,11 @@
 {
   "node_modules/laravel-vite-plugin/inertia-helpers/index.js": [],
+  "resources/js/Components/Event.tsx": [
+    "/build/assets/Welcome-dpsT41HB.js"
+  ],
+  "resources/js/Components/EventList.tsx": [
+    "/build/assets/Welcome-dpsT41HB.js"
+  ],
   "resources/js/Components/NavBar.tsx": [
     "/build/assets/AuthLayout-BE_wCmr5.js"
   ],
@@ -16,7 +22,7 @@
     "/build/assets/SignUp-CVYc6hRG.js"
   ],
   "resources/js/Pages/Welcome.tsx": [
-    "/build/assets/Welcome-CHt1RT0D.js"
+    "/build/assets/Welcome-dpsT41HB.js"
   ],
   "resources/js/ssr.jsx": [],
   "vendor/tightenco/ziggy/dist/index.js": []

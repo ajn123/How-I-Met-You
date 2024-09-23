@@ -52,6 +52,8 @@ class AuthController extends Controller
                 'token' => $token,
             ];
 
+            session()->regenerate();
+
             return redirect()->intended(route('welcome', absolute: false));
         }
 
@@ -60,8 +62,10 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-
         Auth::guard('web')->logout();
+
+        session()->invalidate();
+        session()->regenerateToken();
 
         if ($request->wantsJson()) {
             return response(['message' => 'Logged out'], 200);
