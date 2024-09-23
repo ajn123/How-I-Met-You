@@ -7,7 +7,10 @@ import Login from "../Pages/Login";
 export default function NavBar({ auth }) {
     const isAuth = auth?.user;
     return (
-        <div className="nav justify-items-start gap-1 p-2">
+        <div className="nav justify-items-start gap-1 p-2 bg-gray-200 rounded-t-md">
+            <Link href="/" className="mr-2">
+                Home
+            </Link>
             <Link href="/about" className="mr-2">
                 About
             </Link>

@@ -1,10 +1,8 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 
-
-beforeEach(function (){
+beforeEach(function () {
     $this->withoutMiddleware();
 });
 
@@ -20,7 +18,6 @@ test('can signup', function () {
         'name' => 'John Doe',
         'email' => 'john@example.com',
     ]);
-
 
     $response->assertStatus(302);
     $response->assertRedirect('/');
@@ -53,7 +50,6 @@ test('can not signup with duplicate email', function () {
     $response->assertRedirect('/');
 });
 
-
 test('can signup no password confirmation', function () {
     $response = $this->post('/signup', [
         'name' => 'John Doe',
@@ -64,7 +60,6 @@ test('can signup no password confirmation', function () {
     $response->assertStatus(302);
     $response->assertSessionHasErrors('password');
 });
-
 
 test('can signup wrong password confirmation', function () {
     $response = $this->post('/signup', [
@@ -77,7 +72,6 @@ test('can signup wrong password confirmation', function () {
     $response->assertSessionHasErrors('password');
 });
 
-
 test('can login', function () {
     $user = User::factory()->create();
 
@@ -88,8 +82,6 @@ test('can login', function () {
 
     $response->assertRedirect('/');
 });
-
-
 
 test('can logout', function () {
     $user = User::factory()->create();

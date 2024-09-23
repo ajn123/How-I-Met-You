@@ -34,6 +34,7 @@ function SignUp() {
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "flex flex-row items-center", children: [
           /* @__PURE__ */ jsx("label", { className: "mr-2", htmlFor: "email", children: "Email:" }),
+          errors.email && /* @__PURE__ */ jsx("div", { children: errors.email }),
           /* @__PURE__ */ jsx(
             "input",
             {
@@ -47,6 +48,7 @@ function SignUp() {
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "flex flex-row items-center", children: [
           /* @__PURE__ */ jsx("label", { className: "mr-2", htmlFor: "password", children: "Password:" }),
+          errors.password && /* @__PURE__ */ jsx("div", { children: errors.password }),
           /* @__PURE__ */ jsx(
             "input",
             {

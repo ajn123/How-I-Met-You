@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,10 +17,9 @@ class EventFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'=> fake()->name,
-            'description'=> fake()->text,
-            'date'=> now(),
-            'user_id'=> User::factory()->create()->id
+            'name' => fake()->name,
+            'description' => fake()->text,
+            'date' => now(),
         ];
     }
 }

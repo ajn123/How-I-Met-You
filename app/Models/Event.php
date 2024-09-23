@@ -10,18 +10,15 @@ class Event extends Model
 {
     use HasFactory;
 
-
     protected $fillable = [
         'name',
         'description',
         'date',
-        'user_id'
+        'user_id',
     ];
 
     /**
      * The user that owns the event
-     *
-     * @return BelongsTo
      */
     public function user(): BelongsTo
     {

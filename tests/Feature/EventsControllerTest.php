@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Models\Event;
 use App\Models\User;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -17,11 +16,10 @@ test('guest can retrieve all events', function () {
 
 test('guest can retrieve single event', function () {
     $event = Event::factory()->create();
-    $response = $this->get('/api/events/' . $event->id);
+    $response = $this->get('/api/events/'.$event->id);
     $response->assertOk();
-    $response->assertJson(fn (AssertableJson $json) =>
-        $json->where('name', $event->name)->where('description', $event->description)
-            ->etc()
+    $response->assertJson(fn (AssertableJson $json) => $json->where('name', $event->name)->where('description', $event->description)
+        ->etc()
     );
 });
 
@@ -35,7 +33,7 @@ test('user can create event', function () {
         'name' => fake()->sentence,
         'description' => fake()->paragraph,
         'date' => fake()->date,
-        'user_id' => $user->id
+        'user_id' => $user->id,
     ];
     $response = $this->post('/api/events', $data);
     $response->assertCreated();
@@ -43,7 +41,7 @@ test('user can create event', function () {
     $this->assertDatabaseHas('events', [
         'name' => $data['name'],
         'description' => $data['description'],
-        'date' => $data['date']
+        'date' => $data['date'],
     ]);
 });
 
@@ -56,7 +54,7 @@ test('user can NOT create event', function () {
         'name' => fake()->sentence,
         'description' => fake()->paragraph,
         'date' => fake()->date,
-        'user_id' => $user->id
+        'user_id' => $user->id,
     ];
     $response = $this->post('/api/events', $data);
     $this->assertEquals(401, $response->getStatusCode());
@@ -67,11 +65,11 @@ test('user can update event', function () {
     $event = Event::factory()->create();
     $data = [
         'name' => fake()->sentence,
-        'description' => fake()->paragraph(1)
+        'description' => fake()->paragraph(1),
     ];
-    $response = $this->put('/api/events/' . $event->id, $data);
+    $response = $this->put('/api/events/'.$event->id, $data);
     $response->assertOk();
-    $response->assertJson(fn(AssertableJson $json) => $json->where('name', $data['name'])
+    $response->assertJson(fn (AssertableJson $json) => $json->where('name', $data['name'])
         ->where('description', $data['description'])->etc());
 });
 
@@ -79,7 +77,7 @@ test('user can delete event', function () {
     $this->actingAs(User::factory()->create());
     $event = Event::factory()->create();
     $this->assertDatabaseCount('events', 1);
-    $response = $this->delete('/api/events/' . $event->id);
+    $response = $this->delete('/api/events/'.$event->id);
     $response->assertNoContent();
     $this->assertDatabaseCount('events', 0);
 });
