@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -33,6 +34,8 @@ class AuthController extends Controller
             return $request->json($response, 201);
         }
 
+        auth()->login($user);
+
         return redirect()->intended(route('welcome', absolute: false));
     }
 
@@ -46,13 +49,15 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
+
         if (auth()->attempt($credentials)) {
             $token = $user->createToken('apiToken')->plainTextToken;
             $response = [
                 'user' => $user,
                 'token' => $token
             ];
-            $request->session()->regenerate();
+
+
             return redirect()->intended(route('welcome', absolute: false));
         }
         return redirect('/login')->withErrors(['email' => 'Invalid Login Credentials']);
@@ -60,11 +65,8 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        if (auth()->check()) {
-            auth()->user()->tokens()->delete();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-        }
+
+        Auth::guard('web')->logout();
 
         if($request->wantsJson()) {
             return response(['message' => 'Logged out'], 200);

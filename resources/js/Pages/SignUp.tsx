@@ -39,6 +39,7 @@ export default function SignUp() {
                         <label className="mr-2" htmlFor="email">
                             Email:
                         </label>
+                        {errors.email && <div>{errors.email}</div>}
                         <input
                             className="border-2 rounded-lg p-2"
                             type="text"
@@ -51,6 +52,8 @@ export default function SignUp() {
                         <label className="mr-2" htmlFor="password">
                             Password:
                         </label>
+
+                        {errors.password && <div>{errors.password}</div>}
                         <input
                             className="border-2 rounded-lg p-2"
                             type="password"

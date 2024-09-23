@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
+            $table->text('description');
             $table->dateTime('date');
             $table->foreignIdFor(\App\Models\User::class, 'user_id');
             $table->timestamps();

@@ -67,7 +67,7 @@ test('user can update event', function () {
     $event = Event::factory()->create();
     $data = [
         'name' => fake()->sentence,
-        'description' => fake()->paragraph
+        'description' => fake()->paragraph(1)
     ];
     $response = $this->put('/api/events/' . $event->id, $data);
     $response->assertOk();

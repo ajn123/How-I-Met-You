@@ -1,8 +1,8 @@
 import AuthLayout from "../Layouts/AuthLayout";
 
-export default function About() {
+export default function About({ auth }) {
     return (
-        <AuthLayout>
+        <AuthLayout auth={auth}>
             <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-lg">
                 <p className="text-lg">
                     This is a demo application built with Laravel and React.
