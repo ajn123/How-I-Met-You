@@ -41,12 +41,23 @@ class EventsController extends Controller
         if (! $event) {
             return response()->json(['error' => 'Event not found'], 404);
         }
+        if ( $request->user()->id != $event->user_id) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
 
         $event->update($request->all());
 
         return response()->json($event);
     }
 
+    /**
+     * Delete an event.  Can only be done by the creator. and if you have the delete
+     * events permission.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Event  $event
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy(Request $request, Event $event)
     {
         if (! $event) {
