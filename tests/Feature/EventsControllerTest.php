@@ -31,9 +31,8 @@ test('guest can retrieve single event', function () {
 });
 
 test('user can create event', function () {
-
     $this->assertCount(1, Event::all());
-    Permission::create(['guard_name' => 'web', 'name' => \App\Enums\RolesEnum::CREATE_EVENTS]);
+    Permission::create([ 'name' => \App\Enums\RolesEnum::CREATE_EVENTS]);
     $this->user->givePermissionTo(RolesEnum::CREATE_EVENTS);
     $data = [
         'name' => fake()->sentence,
