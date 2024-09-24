@@ -6,6 +6,7 @@ use App\Enums\RolesEnum;
 use App\Http\Requests\EventRequest;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class EventsController extends Controller
 {
@@ -26,9 +27,8 @@ class EventsController extends Controller
         return response()->json($event, 201);
     }
 
-    public function show($id)
+    public function show(Event $event)
     {
-        $event = Event::find($id);
         if (! $event) {
             return response()->json(['error' => 'Event not found'], 404);
         }
@@ -36,9 +36,8 @@ class EventsController extends Controller
         return response()->json($event);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Event $event)
     {
-        $event = Event::find($id);
         if (! $event) {
             return response()->json(['error' => 'Event not found'], 404);
         }
@@ -48,11 +47,13 @@ class EventsController extends Controller
         return response()->json($event);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, Event $event)
     {
-        $event = Event::find($id);
         if (! $event) {
             return response()->json(['error' => 'Event not found'], 404);
+        }
+        if ( $request->user()->id != $event->user_id || ! $request->user()->hasPermissionTo(RolesEnum::DELETE_EVENTS)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
         $event->delete();
 

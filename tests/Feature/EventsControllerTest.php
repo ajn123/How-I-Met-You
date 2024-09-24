@@ -32,7 +32,7 @@ test('guest can retrieve single event', function () {
 
 test('user can create event', function () {
     $this->assertCount(1, Event::all());
-    Permission::create([ 'name' => \App\Enums\RolesEnum::CREATE_EVENTS]);
+    Permission::create(['name' => \App\Enums\RolesEnum::CREATE_EVENTS]);
     $this->user->givePermissionTo(RolesEnum::CREATE_EVENTS);
     $data = [
         'name' => fake()->sentence,
@@ -50,15 +50,15 @@ test('user can create event', function () {
 });
 
 test('user can NOT create event', function () {
-    Permission::create(['guard_name' => 'web', 'name' => 'create events']);
-    $user = User::factory()->create();
+    // The permission must exist for you to check against it
+    Permission::create(['name' => \App\Enums\RolesEnum::CREATE_EVENTS]);
     $data = [
         'name' => fake()->sentence,
         'description' => fake()->paragraph,
         'date' => fake()->date,
-        'user_id' => $user->id,
+        'user_id' => $this->user->id,
     ];
-    $response = $this->actingAs($user)->post('/api/events', $data);
+    $response = $this->actingAs($this->user)->post('/api/events', $data);
     $this->assertEquals(401, $response->getStatusCode());
     $this->assertDatabaseMissing('events', [
         'name' => $data['name'],
@@ -68,19 +68,19 @@ test('user can NOT create event', function () {
 });
 
 test('user can update event', function () {
-    $user = User::factory()->create();
-    $event = Event::factory()->withUser($user)->create();
     $data = [
         'name' => fake()->sentence,
         'description' => fake()->paragraph(1),
     ];
-    $response = $this->actingAs($user)->put('/api/events/'.$event->id, $data);
+    $response = $this->actingAs($this->user)->put('/api/events/'.$this->event->id, $data);
     $response->assertOk();
     $response->assertJson(fn (AssertableJson $json) => $json->where('name', $data['name'])
         ->where('description', $data['description'])->etc());
 });
 
 test('user can delete event', function () {
+    Permission::create(['name' => \App\Enums\RolesEnum::DELETE_EVENTS]);
+    $this->user->givePermissionTo(RolesEnum::DELETE_EVENTS);
     $this->assertDatabaseCount('events', 1);
     $response = $this->actingAs($this->user)->delete('/api/events/'.$this->event->id);
     $response->assertNoContent();
