@@ -7,40 +7,43 @@ use Spatie\Permission\Models\Permission;
 
 uses(Tests\TestCase::class)->in('Feature');
 
+beforeEach(function () {
+
+    $this->user = User::factory()->create();
+    $this->event = Event::factory()->withUser($this->user)->create();
+});
+
 test('guest can retrieve all events', function () {
 
-    $user = User::factory()->create();
-    Event::factory()->count(5)->create();
+    $user = User::factory()->has( Event::factory()->count(5))->create();
     $response = $this->actingAs($user)->get('/api/events');
     $response->assertOk();
-    $response->assertJsonCount(5);
+    $response->assertJsonCount(6);
 });
 
 test('guest can retrieve single event', function () {
-    $event = Event::factory()->create();
-    $user = User::factory()->create();
-    $response = $this->actingAs($user)->get('/api/events/'.$event->id);
+    $response = $this->actingAs($this->user)->get('/api/events/'.$this->event->id);
     $response->assertOk();
-    $response->assertJson(fn (AssertableJson $json) => $json->where('name', $event->name)->where('description', $event->description)
+    $response->assertJson(fn (AssertableJson $json) => $json->where('name', $this->event->name)->where('description', $this->event->description)
         ->etc()
     );
 });
 
 test('user can create event', function () {
 
+
+
+    $this->assertCount(1, Event::all());
     Permission::create(['guard_name' => 'web', 'name' => 'create events']);
-    $user = User::factory()->create();
-    $user->givePermissionTo('create events');
-    $this->actingAs($user);
+    $this->user->givePermissionTo('create events');
     $data = [
         'name' => fake()->sentence,
         'description' => fake()->paragraph,
         'date' => fake()->date,
-        'user_id' => $user->id,
     ];
-    $response = $this->post('/api/events', $data);
+    $response = $this->actingAs($this->user)->post('/api/events', $data);
     $response->assertCreated();
-    $this->assertCount(1, Event::all());
+    $this->assertCount(2, Event::all());
     $this->assertDatabaseHas('events', [
         'name' => $data['name'],
         'description' => $data['description'],
@@ -67,23 +70,21 @@ test('user can NOT create event', function () {
 });
 
 test('user can update event', function () {
-    $this->actingAs(User::factory()->create());
-    $event = Event::factory()->create();
+    $user = User::factory()->create();
+    $event = Event::factory()->withUser($user)->create();
     $data = [
         'name' => fake()->sentence,
         'description' => fake()->paragraph(1),
     ];
-    $response = $this->put('/api/events/'.$event->id, $data);
+    $response = $this->actingAs($user)->put('/api/events/'.$event->id, $data);
     $response->assertOk();
     $response->assertJson(fn (AssertableJson $json) => $json->where('name', $data['name'])
         ->where('description', $data['description'])->etc());
 });
 
 test('user can delete event', function () {
-    $this->actingAs(User::factory()->create());
-    $event = Event::factory()->create();
     $this->assertDatabaseCount('events', 1);
-    $response = $this->delete('/api/events/'.$event->id);
+    $response = $this->actingAs($this->user)->delete('/api/events/'.$this->event->id);
     $response->assertNoContent();
     $this->assertDatabaseCount('events', 0);
 });

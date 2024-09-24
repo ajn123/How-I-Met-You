@@ -14,7 +14,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
 
         User::truncate();
         Event::truncate();
@@ -23,6 +22,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        $this->call(PermissionsUsersSeeder::class);
 
     }
 }

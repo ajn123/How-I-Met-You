@@ -20,8 +20,19 @@ class EventFactory extends Factory
         return [
             'name' => fake()->name,
             'description' => fake()->text,
-            'date' => now(),
-            'user_id' => User::factory()->create(),
+            'date' => fake()->dateTimeThisYear,
+            'enabled' => true,
+            // Because we create users with events, this was creating uncessary users, uncomment at your own risk
+            // 'user_id' => User::factory()->create(),
         ];
+    }
+
+    public function withUser($user = null): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'user_id' => $user ?? User::factory()->create(),
+            ];
+        });
     }
 }

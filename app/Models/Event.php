@@ -17,6 +17,10 @@ class Event extends Model
         'user_id',
     ];
 
+    protected $casts = [
+        'date' => 'datetime',
+    ];
+
     /**
      * The user that owns the event
      */

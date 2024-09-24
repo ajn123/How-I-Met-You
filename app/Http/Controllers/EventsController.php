@@ -17,10 +17,10 @@ class EventsController extends Controller
 
     public function store(EventRequest $request): \Illuminate\Http\JsonResponse
     {
-        if (! $request->user()->hasPermissionTo('create events')) {
+        if (!$request->user() || ! $request->user()->hasPermissionTo('create events')) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-        $event = Event::create($request->all());
+        $event = $request->user()->events()->create($request->all());
 
         return response()->json($event, 201);
     }

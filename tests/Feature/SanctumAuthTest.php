@@ -16,7 +16,7 @@ test('Can NOT make request', function () {
 test('can use sanctum through bearer token to make request', function () {
     $user = User::factory()->create();
     $this->withHeaders([
-        'Authorization' => 'Bearer ' . $user->createToken('apiToken')->plainTextToken
+        'Authorization' => 'Bearer '.$user->createToken('apiToken')->plainTextToken,
     ])->json('GET', '/api/events')
         ->assertStatus(200);
 });
