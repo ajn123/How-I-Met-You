@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Enums\RolesEnum;
+use App\Models\Event;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -21,18 +24,15 @@ class PermissionsUsersSeeder extends Seeder
         Permission::where('id', '>', 0)->delete();
 
         // create permissions
-        Permission::create(['name' => 'edit articles']);
-        Permission::create(['name' => 'delete articles']);
-        Permission::create(['name' => 'publish articles']);
-        Permission::create(['name' => 'unpublish articles']);
+        Permission::create(['name' => RolesEnum::CREATE_EVENTS]);
+        Permission::create(['name' => RolesEnum::DELETE_EVENTS]);
 
         // create roles and assign existing permissions
         $role1 = Role::create(['name' => 'user']);
-        $role1->givePermissionTo('view articles');
 
         $role2 = Role::create(['name' => 'admin']);
-        $role2->givePermissionTo('create events');
-        $role2->givePermissionTo('delete own events');
+        $role2->givePermissionTo(RolesEnum::CREATE_EVENTS);
+        $role2->givePermissionTo(RolesEnum::DELETE_EVENTS);
 
         $role3 = Role::create(['name' => 'Super-Admin']);
 
@@ -53,5 +53,13 @@ class PermissionsUsersSeeder extends Seeder
             'email' => 'superadmin@example.com',
         ]);
         $user->assignRole($role3);
+
+        $users = User::factory()->count(4)->create();
+
+        Event::factory()->forEachSequence(
+            ...Collection::times(250, function () use ($users) {
+                return ['user_id' => $users->random()];
+            })
+        )->create();
     }
 }

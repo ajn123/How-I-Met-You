@@ -9,17 +9,15 @@ use Spatie\Permission\Models\Permission;
 uses(Tests\TestCase::class)->in('Feature');
 
 beforeEach(function () {
-
     $this->user = User::factory()->create();
     $this->event = Event::factory()->withUser($this->user)->create();
 });
 
 test('guest can retrieve all events', function () {
-
     $user = User::factory()->has(Event::factory()->count(5))->create();
     $response = $this->actingAs($user)->get('/api/events');
     $response->assertOk();
-    $response->assertJsonCount(6);
+    $response->assertJson(fn (AssertableJson $json) => $json->has('data', 6)->etc());
 });
 
 test('guest can retrieve single event', function () {
@@ -30,7 +28,7 @@ test('guest can retrieve single event', function () {
     );
 });
 
-test('user can create event', function () {
+test('user with permission can create event', function () {
     $this->assertCount(1, Event::all());
     Permission::create(['name' => \App\Enums\RolesEnum::CREATE_EVENTS]);
     $this->user->givePermissionTo(RolesEnum::CREATE_EVENTS);
@@ -70,7 +68,7 @@ test('user can NOT create event', function () {
 test('user can update event', function () {
     $data = [
         'name' => fake()->sentence,
-        'description' => fake()->paragraph(1),
+        'description' => fake()->paragraph(3),
     ];
     $response = $this->actingAs($this->user)->put('/api/events/'.$this->event->id, $data);
     $response->assertOk();
@@ -85,4 +83,12 @@ test('user can delete event', function () {
     $response = $this->actingAs($this->user)->delete('/api/events/'.$this->event->id);
     $response->assertNoContent();
     $this->assertDatabaseCount('events', 0);
+});
+
+test('user can Not delete event because they don\'t have permission', function () {
+    Permission::create(['name' => \App\Enums\RolesEnum::DELETE_EVENTS]);
+    $this->assertDatabaseCount('events', 1);
+    $response = $this->actingAs($this->user)->delete('/api/events/'.$this->event->id);
+    $response->assertStatus(401);
+    $this->assertDatabaseCount('events', 1);
 });

@@ -6,17 +6,19 @@ use App\Enums\RolesEnum;
 use App\Http\Requests\EventRequest;
 use App\Models\Event;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class EventsController extends Controller
 {
     public function index()
     {
-        $events = Event::all();
+        $events = Event::paginate(10);
 
         return response()->json($events);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(EventRequest $request): \Illuminate\Http\JsonResponse
     {
         if (! $request->user() || ! $request->user()->hasPermissionTo(RolesEnum::CREATE_EVENTS)) {
@@ -41,7 +43,7 @@ class EventsController extends Controller
         if (! $event) {
             return response()->json(['error' => 'Event not found'], 404);
         }
-        if ( $request->user()->id != $event->user_id) {
+        if ($request->user()->id != $event->user_id) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
@@ -54,8 +56,6 @@ class EventsController extends Controller
      * Delete an event.  Can only be done by the creator. and if you have the delete
      * events permission.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Request $request, Event $event)
@@ -63,7 +63,7 @@ class EventsController extends Controller
         if (! $event) {
             return response()->json(['error' => 'Event not found'], 404);
         }
-        if ( $request->user()->id != $event->user_id || ! $request->user()->hasPermissionTo(RolesEnum::DELETE_EVENTS)) {
+        if ($request->user()->id != $event->user_id || ! $request->user()->hasPermissionTo(RolesEnum::DELETE_EVENTS)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
         $event->delete();

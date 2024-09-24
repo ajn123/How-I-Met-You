@@ -29,7 +29,7 @@ class EventFactory extends Factory
 
     public function withUser($user = null): Factory
     {
-        return $this->state(function (array $attributes ) use ($user) {
+        return $this->state(function (array $attributes) use ($user) {
             return [
                 'user_id' => $user ?? User::factory()->create(),
             ];
