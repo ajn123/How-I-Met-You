@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\RolesEnum;
 use App\Models\Event;
 use App\Models\User;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -15,7 +16,7 @@ beforeEach(function () {
 
 test('guest can retrieve all events', function () {
 
-    $user = User::factory()->has( Event::factory()->count(5))->create();
+    $user = User::factory()->has(Event::factory()->count(5))->create();
     $response = $this->actingAs($user)->get('/api/events');
     $response->assertOk();
     $response->assertJsonCount(6);
@@ -31,11 +32,9 @@ test('guest can retrieve single event', function () {
 
 test('user can create event', function () {
 
-
-
     $this->assertCount(1, Event::all());
-    Permission::create(['guard_name' => 'web', 'name' => 'create events']);
-    $this->user->givePermissionTo('create events');
+    Permission::create(['guard_name' => 'web', 'name' => \App\Enums\RolesEnum::CREATE_EVENTS]);
+    $this->user->givePermissionTo(RolesEnum::CREATE_EVENTS);
     $data = [
         'name' => fake()->sentence,
         'description' => fake()->paragraph,

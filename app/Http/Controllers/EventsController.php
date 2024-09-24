@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\RolesEnum;
 use App\Http\Requests\EventRequest;
 use App\Models\Event;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class EventsController extends Controller
 
     public function store(EventRequest $request): \Illuminate\Http\JsonResponse
     {
-        if (!$request->user() || ! $request->user()->hasPermissionTo('create events')) {
+        if (! $request->user() || ! $request->user()->hasPermissionTo(RolesEnum::CREATE_EVENTS)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
         $event = $request->user()->events()->create($request->all());

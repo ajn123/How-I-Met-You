@@ -17,7 +17,6 @@ class PermissionsUsersSeeder extends Seeder
     {
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-
         Role::where('id', '>', 0)->delete();
         Permission::where('id', '>', 0)->delete();
 
