@@ -38,9 +38,7 @@ class AuthController extends Controller
             session()->regenerate();
             auth()->login($user);
 
-             return \Inertia\Inertia::render('Welcome', [
-                 'message' => 'You are logged in!',
-            ]);
+            return redirect()->intended(route('welcome',absolute: false));
         }
 
         return redirect('/login')->withErrors(['email' => 'Invalid Login Credentials']);

@@ -49,15 +49,15 @@ function EventList({}) {
   ] });
 }
 function Welcome({ auth, message }) {
-  const sayHello = () => {
-    console.log("hi");
-    toast("Wow so easy!", { type: "success" });
-  };
+  useEffect(() => {
+    if (message) {
+      toast(message);
+    }
+  }, []);
   return /* @__PURE__ */ jsxs(Auth, { auth, children: [
     /* @__PURE__ */ jsxs("div", { className: " h-screen bg-cyan-500 flex flex-col justify-center items-center", children: [
       /* @__PURE__ */ jsx("h1", { className: "text-6xl font-bold", children: "Welcome to Laravel React" }),
       /* @__PURE__ */ jsx("p", { className: "text-2xl", children: "This is a demo application." }),
-      /* @__PURE__ */ jsx("button", { onClick: sayHello, children: "Say Hello" }),
       /* @__PURE__ */ jsx("p", { className: "text-2xl", children: "It uses the React Router for client-side routing and the Laravel Sanctum package for authentication." })
     ] }),
     /* @__PURE__ */ jsx("div", { children: (auth == null ? void 0 : auth.user) && /* @__PURE__ */ jsx(EventList, {}) })

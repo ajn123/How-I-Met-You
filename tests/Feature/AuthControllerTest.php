@@ -80,7 +80,7 @@ test('can login', function () {
         'password' => 'password',
     ]);
 
-    $response->assertRedirect('/');
+    $response->assertStatus(200);
 });
 
 test('can logout', function () {

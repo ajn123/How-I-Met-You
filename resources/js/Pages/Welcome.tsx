@@ -8,10 +8,10 @@ import { useEffect } from "react";
 
 export default function Welcome({ auth, message }) {
     useEffect(() => {
-        if (message) {
+        if (auth?.user) {
             toast(message);
         }
-    }, []);
+    }, [auth]);
     return (
         <AuthLayout auth={auth}>
             <div className=" h-screen bg-cyan-500 flex flex-col justify-center items-center">

@@ -9,6 +9,7 @@ export default function EventList({}) {
     const page = useRef(1);
 
     const ref = useRef(null);
+    const maxPages = useRef(Number.POSITIVE_INFINITY);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -33,9 +34,14 @@ export default function EventList({}) {
     }, [ref]);
 
     const getMoreEvents = () => {
+        if (page.current > maxPages.current) {
+            console.log("no more events");
+            return;
+        }
         axios
             .get(`/api/events?page=${page.current}`)
             .then((response) => {
+                maxPages.current = response.data.last_page;
                 setEvents((prevState) => [...prevState, ...response.data.data]);
             })
             .catch((error) => {
