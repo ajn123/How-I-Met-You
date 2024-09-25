@@ -1,7 +1,8 @@
 import { jsxs, jsx, Fragment } from "react/jsx-runtime";
 import { A as Auth } from "./AuthLayout-BMSTr6NK.js";
-import axios from "axios";
 import { useState, useRef, useEffect } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 import "@inertiajs/react";
 function Event({ event }) {
   return /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 p-4 bg-white rounded-lg shadow-lg my-4 border border-amber-900", children: [
@@ -47,16 +48,16 @@ function EventList({}) {
     /* @__PURE__ */ jsx("div", { ref })
   ] });
 }
-function Welcome({ auth }) {
-  axios.get("/api/events").then((response) => {
-    console.log(response.data);
-  }).catch((error) => {
-    console.log(error);
-  });
+function Welcome({ auth, message }) {
+  const sayHello = () => {
+    console.log("hi");
+    toast("Wow so easy!", { type: "success" });
+  };
   return /* @__PURE__ */ jsxs(Auth, { auth, children: [
     /* @__PURE__ */ jsxs("div", { className: " h-screen bg-cyan-500 flex flex-col justify-center items-center", children: [
       /* @__PURE__ */ jsx("h1", { className: "text-6xl font-bold", children: "Welcome to Laravel React" }),
       /* @__PURE__ */ jsx("p", { className: "text-2xl", children: "This is a demo application." }),
+      /* @__PURE__ */ jsx("button", { onClick: sayHello, children: "Say Hello" }),
       /* @__PURE__ */ jsx("p", { className: "text-2xl", children: "It uses the React Router for client-side routing and the Laravel Sanctum package for authentication." })
     ] }),
     /* @__PURE__ */ jsx("div", { children: (auth == null ? void 0 : auth.user) && /* @__PURE__ */ jsx(EventList, {}) })

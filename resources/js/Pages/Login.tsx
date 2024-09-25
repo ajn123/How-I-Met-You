@@ -1,6 +1,7 @@
 import { useForm } from "@inertiajs/react";
 import axios from "axios";
 import AuthLayout from "../Layouts/AuthLayout";
+import { toast } from "react-toastify";
 
 export default function Login({ auth }) {
     const { data, setData, post, processing, errors } = useForm({

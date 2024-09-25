@@ -3,17 +3,15 @@ import NavBar from "../Components/NavBar";
 import AuthLayout from "../Layouts/AuthLayout";
 import axios from "axios";
 import EventList from "../Components/EventList";
+import { toast, ToastContainer } from "react-toastify";
+import { useEffect } from "react";
 
-export default function Welcome({ auth }) {
-    axios
-        .get("/api/events")
-        .then((response) => {
-            console.log(response.data);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-
+export default function Welcome({ auth, message }) {
+    useEffect(() => {
+        if (message) {
+            toast(message);
+        }
+    }, []);
     return (
         <AuthLayout auth={auth}>
             <div className=" h-screen bg-cyan-500 flex flex-col justify-center items-center">

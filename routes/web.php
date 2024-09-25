@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return \Inertia\Inertia::render('Welcome', []);
+    return \Inertia\Inertia::render('Welcome', [
+    ]);
 })->name('welcome');
 
 Route::post('/signup', [App\Http\Controllers\AuthController::class, 'signup']);
