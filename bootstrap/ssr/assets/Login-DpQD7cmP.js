@@ -1,6 +1,6 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { useForm } from "@inertiajs/react";
-import { A as Auth } from "./AuthLayout-BE_wCmr5.js";
+import { A as Auth } from "./AuthLayout-BMSTr6NK.js";
 function Login({ auth }) {
   const { data, setData, post, processing, errors } = useForm({
     email: "",

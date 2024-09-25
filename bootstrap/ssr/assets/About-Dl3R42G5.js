@@ -1,5 +1,5 @@
 import { jsx, jsxs } from "react/jsx-runtime";
-import { A as Auth } from "./AuthLayout-BE_wCmr5.js";
+import { A as Auth } from "./AuthLayout-BMSTr6NK.js";
 import "@inertiajs/react";
 function About({ auth }) {
   return /* @__PURE__ */ jsx(Auth, { auth, children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center p-4 bg-white rounded-lg shadow-lg", children: [

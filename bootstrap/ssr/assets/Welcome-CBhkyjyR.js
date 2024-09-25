@@ -1,5 +1,5 @@
 import { jsxs, jsx, Fragment } from "react/jsx-runtime";
-import { A as Auth } from "./AuthLayout-BE_wCmr5.js";
+import { A as Auth } from "./AuthLayout-BMSTr6NK.js";
 import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import "@inertiajs/react";
@@ -12,40 +12,39 @@ function Event({ event }) {
 }
 function EventList({}) {
   const [events, setEvents] = useState([]);
-  let page = useRef(2);
+  const page = useRef(1);
+  const ref = useRef(null);
   useEffect(() => {
-    axios.get("/api/events").then((response) => {
-      console.log(response.data.data);
-      setEvents(response.data.data);
-    });
-  }, []);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          console.log("Component is scrolled into view");
+          getMoreEvents();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, [ref]);
   const getMoreEvents = () => {
     axios.get(`/api/events?page=${page.current}`).then((response) => {
-      setEvents([...events, ...response.data.data]);
+      setEvents((prevState) => [...prevState, ...response.data.data]);
     }).catch((error) => {
       console.log(error);
     });
     console.log(page.current);
-    page.current = page.current + 1;
+    page.current++;
   };
-  new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        getMoreEvents();
-      }
-    });
-  });
   return /* @__PURE__ */ jsxs(Fragment, { children: [
     events.length > 0 && events.map((event, id) => /* @__PURE__ */ jsx(Event, { event }, id)),
-    /* @__PURE__ */ jsx("div", { ref: "landmark" }),
-    /* @__PURE__ */ jsx(
-      "button",
-      {
-        className: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded",
-        onClick: getMoreEvents,
-        children: "Load More"
-      }
-    )
+    /* @__PURE__ */ jsx("div", { ref })
   ] });
 }
 function Welcome({ auth }) {

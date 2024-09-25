@@ -1,28 +1,28 @@
 {
   "node_modules/laravel-vite-plugin/inertia-helpers/index.js": [],
   "resources/js/Components/Event.tsx": [
-    "/build/assets/Welcome-CCjbR07d.js"
+    "/build/assets/Welcome-CBhkyjyR.js"
   ],
   "resources/js/Components/EventList.tsx": [
-    "/build/assets/Welcome-CCjbR07d.js"
+    "/build/assets/Welcome-CBhkyjyR.js"
   ],
   "resources/js/Components/NavBar.tsx": [
-    "/build/assets/AuthLayout-BE_wCmr5.js"
+    "/build/assets/AuthLayout-BMSTr6NK.js"
   ],
   "resources/js/Layouts/AuthLayout.tsx": [
-    "/build/assets/AuthLayout-BE_wCmr5.js"
+    "/build/assets/AuthLayout-BMSTr6NK.js"
   ],
   "resources/js/Pages/About.tsx": [
-    "/build/assets/About-uA62xlrx.js"
+    "/build/assets/About-Dl3R42G5.js"
   ],
   "resources/js/Pages/Login.tsx": [
-    "/build/assets/Login-SulLaCxc.js"
+    "/build/assets/Login-DpQD7cmP.js"
   ],
   "resources/js/Pages/SignUp.tsx": [
-    "/build/assets/SignUp-CVYc6hRG.js"
+    "/build/assets/SignUp-D1Z6oE5b.js"
   ],
   "resources/js/Pages/Welcome.tsx": [
-    "/build/assets/Welcome-CCjbR07d.js"
+    "/build/assets/Welcome-CBhkyjyR.js"
   ],
   "resources/js/ssr.jsx": [],
   "vendor/tightenco/ziggy/dist/index.js": []

@@ -15,7 +15,7 @@ function Auth({
   auth,
   children
 }) {
-  return /* @__PURE__ */ jsxs("div", { className: "container mx-auto p-4", id: "below", children: [
+  return /* @__PURE__ */ jsxs("div", { className: "container mx-auto p-4", children: [
     /* @__PURE__ */ jsx(NavBar, { auth }),
     /* @__PURE__ */ jsx("div", { id: "content", children })
   ] });
