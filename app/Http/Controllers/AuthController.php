@@ -7,6 +7,7 @@ use App\Http\Requests\SignUpUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class AuthController extends Controller
 {
@@ -38,6 +39,8 @@ class AuthController extends Controller
             session()->regenerate();
             auth()->login($user);
 
+            $request->session()->flash('message', 'Login successful');
+
             return redirect()->intended(route('welcome',absolute: false));
         }
 
@@ -51,6 +54,7 @@ class AuthController extends Controller
         session()->invalidate();
         session()->regenerateToken();
 
+        $request->session()->flash('message', 'You have logged out.');
 
         return redirect()->intended(route('welcome', absolute: false));
     }

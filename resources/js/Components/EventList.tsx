@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Event from "./Event";
 import { router } from "@inertiajs/react";
+import { toast } from "react-toastify";
 
 export default function EventList({}) {
     const [events, setEvents] = useState([]);
@@ -15,7 +16,6 @@ export default function EventList({}) {
         const observer = new IntersectionObserver(
             (entries) => {
                 if (entries[0].isIntersecting) {
-                    console.log("Component is scrolled into view");
                     getMoreEvents();
                 }
             },
@@ -35,7 +35,7 @@ export default function EventList({}) {
 
     const getMoreEvents = () => {
         if (page.current > maxPages.current) {
-            console.log("no more events");
+            toast("No more events.", { error: true });
             return;
         }
         axios
