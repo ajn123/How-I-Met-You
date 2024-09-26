@@ -2,6 +2,7 @@
 
 use App\Enums\RolesEnum;
 use App\Models\Event;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Spatie\Permission\Models\Permission;
@@ -11,13 +12,16 @@ uses(Tests\TestCase::class)->in('Feature');
 beforeEach(function () {
     $this->user = User::factory()->create();
     $this->event = Event::factory()->withUser($this->user)->create();
+
+    $this->event->tags()->attach(Tag::factory()->count(1)->create());
 });
 
-test('guest can retrieve all events', function () {
+test('guest can retrieve all events with tags', function () {
     $user = User::factory()->has(Event::factory()->count(5))->create();
     $response = $this->actingAs($user)->get('/api/events');
     $response->assertOk();
     $response->assertJson(fn (AssertableJson $json) => $json->has('data', 6)->etc());
+    $response->assertJson(fn (AssertableJson $json) => $json->where('data.0.tags.0.name', $this->event->tags()->first()->name)->etc());
 });
 
 test('guest can retrieve single event', function () {

@@ -5,6 +5,7 @@ use App\Models\Tag;
 beforeEach(function () {
     $user = \App\Models\User::factory()->create();
     $this->event = \App\Models\Event::factory()->withUser()->create();
+    $this->event->tags()->attach(Tag::factory()->count(3)->create());
 });
 
 test('events have a name', function () {
@@ -28,8 +29,6 @@ test('events have a user', function () {
 });
 
 test('events can have many tags', function () {
-    $tag = \App\Models\Tag::factory(3)->create();
-    $this->event->tags()->attach(Tag::all());
 
     expect($this->event->tags)->toBeInstanceOf(\Illuminate\Database\Eloquent\Collection::class)
         ->and($this->event->tags->count($this->event->tags))->toBe(3);
