@@ -28,7 +28,6 @@ test('can use sanctum through bearer token to make request', function () {
 
 
 test('can make requests without session', function () {
-
     $data = [
         'email' => $this->user->email,
         'password' => 'password',

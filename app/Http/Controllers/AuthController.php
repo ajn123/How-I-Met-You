@@ -38,8 +38,7 @@ class AuthController extends Controller
 
             session()->regenerate();
             auth()->login($user);
-
-            $request->session()->flash('message', 'Login successful');
+            session()->flash('message', 'Login successful');
 
             return redirect()->intended(route('welcome',absolute: false));
         }
@@ -53,8 +52,7 @@ class AuthController extends Controller
 
         session()->invalidate();
         session()->regenerateToken();
-
-        $request->session()->flash('message', 'You have logged out.');
+        session()->flash('message', 'You have logged out.');
 
         return redirect()->intended(route('welcome', absolute: false));
     }

@@ -75,12 +75,14 @@ test('can signup wrong password confirmation', function () {
 test('can login', function () {
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)->withSession([])->post('/login', [
+
+    $this->startSession();
+    $response = $this->actingAs($user)->post('/login', [
         'email' => $user->email,
         'password' => 'password',
     ]);
 
-    $response->assertStatus(200);
+    $response->assertStatus(302);
 });
 
 test('can logout', function () {

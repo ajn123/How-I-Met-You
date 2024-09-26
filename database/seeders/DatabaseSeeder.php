@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Event;
+use App\Models\Tag;
+use App\Models\Taggable;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,6 +19,8 @@ class DatabaseSeeder extends Seeder
 
         User::truncate();
         Event::truncate();
+        Taggable::truncate();
+        Tag::where('id', '>', 0)->delete();
 
         $user = User::factory()->has(Event::factory(10))->create([
             'name' => 'Test User',

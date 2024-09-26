@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Enums\RolesEnum;
 use App\Models\Event;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Seeder;
@@ -61,5 +62,29 @@ class PermissionsUsersSeeder extends Seeder
                 return ['user_id' => $users->random()];
             })
         )->create();
+
+
+        Tag::factory()->create([
+            'name' => 'Free',
+        ]);
+
+        Tag::factory()->create([
+            'name' => 'Outside',
+        ]);
+
+        Tag::factory()->create([
+            'name' => 'Paid',
+        ]);
+
+        Tag::factory()->create([
+            'name' => 'Active',
+        ]);
+
+        Event::all()->each(function (Event $event) {
+            $event->tags()->sync(
+                Tag::all()->random(3)->pluck('id')->toArray()
+            );
+        });
+
     }
 }

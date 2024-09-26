@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Tag;
+
 beforeEach(function () {
     $user = \App\Models\User::factory()->create();
     $this->event = \App\Models\Event::factory()->withUser()->create();
@@ -23,4 +25,12 @@ test('events have a date', function () {
 test('events have a user', function () {
 
     expect($this->event->user)->toBeInstanceOf(\App\Models\User::class);
+});
+
+test('events can have many tags', function () {
+    $tag = \App\Models\Tag::factory(3)->create();
+    $this->event->tags()->attach(Tag::all());
+
+    expect($this->event->tags)->toBeInstanceOf(\Illuminate\Database\Eloquent\Collection::class)
+        ->and($this->event->tags->count($this->event->tags))->toBe(3);
 });

@@ -1,28 +1,31 @@
 {
   "node_modules/laravel-vite-plugin/inertia-helpers/index.js": [],
   "resources/js/Components/Event.tsx": [
-    "/build/assets/Welcome-BRKFfB2c.js"
+    "/build/assets/Welcome-BgkgR3VJ.js"
   ],
   "resources/js/Components/EventList.tsx": [
-    "/build/assets/Welcome-BRKFfB2c.js"
+    "/build/assets/Welcome-BgkgR3VJ.js"
   ],
   "resources/js/Components/NavBar.tsx": [
-    "/build/assets/AuthLayout-BMSTr6NK.js"
+    "/build/assets/AuthLayout-C4SgqcLj.js"
+  ],
+  "resources/js/Elements/Tag.tsx": [
+    "/build/assets/Welcome-BgkgR3VJ.js"
   ],
   "resources/js/Layouts/AuthLayout.tsx": [
-    "/build/assets/AuthLayout-BMSTr6NK.js"
+    "/build/assets/AuthLayout-C4SgqcLj.js"
   ],
   "resources/js/Pages/About.tsx": [
-    "/build/assets/About-Dl3R42G5.js"
+    "/build/assets/About-BV6jK8Qw.js"
   ],
   "resources/js/Pages/Login.tsx": [
-    "/build/assets/Login-DpQD7cmP.js"
+    "/build/assets/Login-wInXvkAY.js"
   ],
   "resources/js/Pages/SignUp.tsx": [
-    "/build/assets/SignUp-D1Z6oE5b.js"
+    "/build/assets/SignUp-BbVOdqhS.js"
   ],
   "resources/js/Pages/Welcome.tsx": [
-    "/build/assets/Welcome-BRKFfB2c.js"
+    "/build/assets/Welcome-BgkgR3VJ.js"
   ],
   "resources/js/ssr.jsx": [],
   "vendor/tightenco/ziggy/dist/index.js": []
