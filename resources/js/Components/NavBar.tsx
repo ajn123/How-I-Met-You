@@ -7,22 +7,28 @@ import Login from "../Pages/Login";
 export default function NavBar({ auth }) {
     const isAuth = auth?.user;
     return (
-        <div className="nav justify-items-start gap-1 p-2 bg-gray-200 rounded-t-md">
-            <Link href="/" className="mr-2">
+        <div className="border-b-2 pb-5 mt-2 border-black rounded-t-md">
+            <Link href="/" className="nav-links">
                 Home
             </Link>
-            <Link href="/about" className="mr-2">
+            <Link href="/about" className="nav-links">
                 About
             </Link>
             {isAuth ? (
-                <Link href="/logout" method="post" as="button">
+                <Link href="/logout" className="nav-links" method="post">
                     Logout
                 </Link>
             ) : (
                 <>
-                    <Link href="/signup"> Sign up </Link>
+                    <Link href="/signup" className={"nav-links"}>
+                        {" "}
+                        Sign up{" "}
+                    </Link>
 
-                    <Link href="/login"> Login </Link>
+                    <Link href="/login" className={"nav-links"}>
+                        {" "}
+                        Login{" "}
+                    </Link>
                 </>
             )}
         </div>

@@ -3,15 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Enums\RolesEnum;
+use App\Http\Filters\EventFilter;
 use App\Http\Requests\EventRequest;
 use App\Models\Event;
 use Illuminate\Http\Request;
 
 class EventsController extends Controller
 {
-    public function index()
+    public function index(Request $request, EventFilter $filter)
     {
-        $events = Event::with('tags')->paginate(10);
+        $events =Event::query();
+
+        $events = $filter->apply($events)->with('tags')->paginate(10);
 
         return response()->json($events);
     }

@@ -3,6 +3,7 @@ import axios from "axios";
 import Event from "./Event";
 import { router } from "@inertiajs/react";
 import { toast } from "react-toastify";
+import EventFilter from "./EventFilter";
 
 export default function EventList({}) {
     const [events, setEvents] = useState([]);
@@ -11,6 +12,8 @@ export default function EventList({}) {
 
     const ref = useRef(null);
     const maxPages = useRef(Number.POSITIVE_INFINITY);
+
+    const filterString = useRef("");
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -39,21 +42,18 @@ export default function EventList({}) {
             return;
         }
         axios
-            .get(`/api/events?page=${page.current}`)
+            .get(`/api/events?${filterString.current}&page=${page.current}`)
             .then((response) => {
                 maxPages.current = response.data.last_page;
                 setEvents((prevState) => [...prevState, ...response.data.data]);
-            })
-            .catch((error) => {
-                console.log(error);
             });
-        console.log(page.current);
         page.current++;
     };
 
     return (
         <>
-            {events.length > 0 &&
+            <EventFilter setEvents={setEvents} filterString={filterString} />
+            {events.length > 0 && <EventFilter setEvents={setEvents} /> &&
                 events.map((event, id) => <Event key={id} event={event} />)}
 
             <div ref={ref}></div>

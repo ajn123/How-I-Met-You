@@ -82,7 +82,7 @@ class PermissionsUsersSeeder extends Seeder
 
         Event::all()->each(function (Event $event) {
             $event->tags()->sync(
-                Tag::all()->random(3)->pluck('id')->toArray()
+                Tag::all()->random(1)->pluck('id')->toArray()
             );
         });
 

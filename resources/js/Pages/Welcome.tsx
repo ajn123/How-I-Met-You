@@ -9,12 +9,10 @@ import { useEffect, useRef } from "react";
 export default function Welcome({ auth, flash }) {
     return (
         <AuthLayout auth={auth} flash={flash}>
-            <div className=" h-screen bg-cyan-500 flex flex-col justify-center items-center">
-                <h1 className="text-6xl font-bold">Welcome to Laravel React</h1>
-                <p className="text-2xl">This is a demo application.</p>
-                <p className="text-2xl">
-                    It uses the React Router for client-side routing and the
-                    Laravel Sanctum package for authentication.
+            <div className="h-96 bg-cyan-200 flex flex-col justify-center items-center rounded-b-md shadow-2xl">
+                <h1 className="text-6xl font-bold">Find Events</h1>
+                <p className="text-2xl mx-4 text-center">
+                    Scroll down to see upcoming events or use the search bar.
                 </p>
             </div>
             <div>{auth?.user && <EventList />}</div>

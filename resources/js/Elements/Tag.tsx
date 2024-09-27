@@ -5,7 +5,6 @@ export default function Tag({ tag }) {
 
     useEffect(() => {
         let x = Math.floor(Math.random() * 3);
-        console.log(x);
         if (x === 0) {
             setColor("red");
         } else if (x === 1) {
@@ -17,7 +16,6 @@ export default function Tag({ tag }) {
         }
     }, []);
 
-    console.log(color);
     return (
         <>
             <button
