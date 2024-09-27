@@ -25,6 +25,7 @@ class EventRequest extends FormRequest
             'name' => 'required|string',
             'description' => 'required|string',
             'date' => 'required|date',
+            'url' => 'url',
         ];
     }
 }

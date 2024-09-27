@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +17,7 @@ class Event extends Model
         'description',
         'date',
         'user_id',
+        'url',
     ];
 
     protected $casts = [
@@ -43,5 +45,11 @@ class Event extends Model
             ->pluck("events")
             ->flatten()
             ->unique("id");
+    }
+
+
+    public function scopeInFuture(Builder $query): Builder
+    {
+        return $query->where("date", ">=", now()->toDateString())->orderBy('date');
     }
 }

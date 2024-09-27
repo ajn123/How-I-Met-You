@@ -40,6 +40,7 @@ test('user with permission can create event', function () {
         'name' => fake()->sentence,
         'description' => fake()->paragraph,
         'date' => fake()->date,
+        'url' => fake()->url,
     ];
     $response = $this->actingAs($this->user)->post('/api/events', $data);
     $response->assertCreated();
@@ -48,6 +49,7 @@ test('user with permission can create event', function () {
         'name' => $data['name'],
         'description' => $data['description'],
         'date' => $data['date'],
+        'url' => $data['url'],
     ]);
 });
 
