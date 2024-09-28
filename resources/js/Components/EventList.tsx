@@ -8,6 +8,8 @@ import EventFilter from "./EventFilter";
 export default function EventList({}) {
     const [events, setEvents] = useState([]);
 
+    const [params, setParams] = useState({});
+
     const page = useRef(1);
 
     const ref = useRef(null);
@@ -19,7 +21,7 @@ export default function EventList({}) {
         const observer = new IntersectionObserver(
             (entries) => {
                 if (entries[0].isIntersecting) {
-                    getMoreEvents();
+                    getMoreEvents(true);
                 }
             },
             { threshold: 0.1 },
@@ -34,26 +36,55 @@ export default function EventList({}) {
                 observer.unobserve(ref.current);
             }
         };
-    }, [ref]);
+    }, [ref, params]);
 
-    const getMoreEvents = () => {
+    useEffect(() => {
+        getMoreEvents(false);
+    }, [params]);
+
+    const getMoreEvents = (getMore = true) => {
+        if (!getMore) {
+            page.current = 1;
+        }
         if (page.current > maxPages.current) {
             toast("No more events.", { error: true });
             return;
         }
+
+        const finalParams = {
+            ...params,
+            page: page.current,
+        };
+
+        console.log(`finalParams: ${JSON.stringify(finalParams)}`);
+        const urlSearchParams = new URLSearchParams(finalParams);
+
+        console.log(`/api/events?${urlSearchParams.toString()}`);
         axios
-            .get(`/api/events?${filterString.current}&page=${page.current}`)
+            .get(`/api/events?${urlSearchParams.toString()}`)
             .then((response) => {
                 maxPages.current = response.data.last_page;
-                setEvents((prevState) => [...prevState, ...response.data.data]);
+                if (!getMore) {
+                    setEvents(response.data.data);
+                } else {
+                    setEvents((prevState) => [
+                        ...prevState,
+                        ...response.data.data,
+                    ]);
+                }
             });
         page.current++;
     };
 
     return (
         <>
-            <EventFilter setEvents={setEvents} filterString={filterString} />
-            {events.length > 0 && <EventFilter setEvents={setEvents} /> &&
+            <EventFilter
+                setEvents={setEvents}
+                filterString={filterString}
+                setParams={setParams}
+                getMoreEvents={getMoreEvents}
+            />
+            {events.length > 0 &&
                 events.map((event, id) => <Event key={id} event={event} />)}
 
             <div ref={ref}></div>

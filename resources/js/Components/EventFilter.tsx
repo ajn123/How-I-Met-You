@@ -1,31 +1,66 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
 
-export default function EventFilter({ setEvents, filterString }) {
+export default function EventFilter({ setEvents, filterString, setParams }) {
+    const [tags, setTags] = useState([]);
+
+    useEffect(() => {
+        axios.get("/api/tags").then((response) => {
+            setTags(response.data);
+        });
+    }, []);
+
+    const [searchValue, getSearchValue] = useState("");
     const filter = (filter) => {
-        console.log(`filtering ${filter}`);
-        axios
-            .get(`/api/events?${filter}`)
-            .then((response) => {
-                console.log(response.data.data);
-                setEvents(response.data.data);
-                setEvents((prevState) => [...response.data.data]);
-                filterString.current = filter;
-            })
-            .catch((error) => {
-                toast("There was an error getting the events.", {
-                    error: true,
-                });
+        if (filter == null) {
+            setParams({});
+        } else {
+            setParams((prevState) => {
+                return {
+                    ...filter,
+                };
             });
+        }
     };
 
     return (
-        <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-lg my-4 border border-amber-900">
+        <div className="flex flex-wrap items-center p-4 bg-white rounded-lg shadow-lg my-4 border border-amber-900">
+            <input
+                className={"h-12 p-2"}
+                type="search"
+                placeholder="Search"
+                value={searchValue}
+                onChange={(e) => {
+                    filter({ searchName: e.target.value });
+                    getSearchValue(e.target.value);
+                }}
+            />
+
+            {tags.map((tag, key) => (
+                <div
+                    key={key}
+                    onClick={() => filter({ tags: tag.name })}
+                    className={
+                        "flex p-6 mb-4 flex-initial w-32 rounded-md text-center object-center hover:bg-black text-2xl hover:text-white transition-all ease-in justify-center border border-2 mx-4 font-bold" +
+                        (filterString.current === `tags=${tag.name}`
+                            ? " bg-black text-white"
+                            : "")
+                    }
+                >
+                    {tag.name}
+                </div>
+            ))}
             <div
-                onClick={() => filter("tags=free")}
-                className="text-2xl font-bold col-span-2 lg:col-span-1"
+                onClick={() => {
+                    filter(null);
+                    getSearchValue("");
+                }}
+                className={
+                    "flex p-6 mb-4 flex-initial w-48 rounded-md text-center object-center hover:bg-black text-2xl hover:text-white transition-all ease-in justify-center border mx-4 font-bold"
+                }
             >
-                Free
+                Clear Filters
             </div>
         </div>
     );

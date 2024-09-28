@@ -15,4 +15,9 @@ class EventFilter extends QueryFilter
         });
     }
 
+    public function searchName($value)
+    {
+        return $this->builder->where("name", "like", "%{$value}%");
+    }
+
 }

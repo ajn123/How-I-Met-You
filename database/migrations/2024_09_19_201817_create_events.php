@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->dateTime('date');
-            $table->string('url');
+            $table->string('url')->nullable();
             $table->boolean('enabled')->default(true);
             $table->foreignIdFor(\App\Models\User::class, 'user_id');
             $table->timestamps();
