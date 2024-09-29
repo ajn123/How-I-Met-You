@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -39,17 +38,16 @@ class Event extends Model
 
     public function scopeSearchTags($query, ...$tags): \Illuminate\Support\Collection
     {
-        return Tag::with("events")
-            ->whereIn("name", $tags)
+        return Tag::with('events')
+            ->whereIn('name', $tags)
             ->get()
-            ->pluck("events")
+            ->pluck('events')
             ->flatten()
-            ->unique("id");
+            ->unique('id');
     }
-
 
     public function scopeInFuture(Builder $query): Builder
     {
-        return $query->where("date", ">=", now()->toDateString())->orderBy('date');
+        return $query->where('date', '>=', now()->toDateString())->orderBy('date');
     }
 }

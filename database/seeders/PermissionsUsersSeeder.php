@@ -63,7 +63,6 @@ class PermissionsUsersSeeder extends Seeder
             })
         )->create();
 
-
         Tag::factory()->create([
             'name' => 'Free',
         ]);

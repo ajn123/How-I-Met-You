@@ -7,7 +7,6 @@ use App\Http\Requests\SignUpUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 
 class AuthController extends Controller
 {
@@ -40,7 +39,7 @@ class AuthController extends Controller
             auth()->login($user);
             session()->flash('message', 'Login successful');
 
-            return redirect()->intended(route('welcome',absolute: false));
+            return redirect()->intended(route('welcome', absolute: false));
         }
 
         return redirect('/login')->withErrors(['email' => 'Invalid Login Credentials']);

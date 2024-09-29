@@ -75,7 +75,6 @@ test('can signup wrong password confirmation', function () {
 test('can login', function () {
     $user = User::factory()->create();
 
-
     $this->startSession();
     $response = $this->actingAs($user)->post('/login', [
         'email' => $user->email,

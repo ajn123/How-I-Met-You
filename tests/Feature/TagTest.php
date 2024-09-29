@@ -15,7 +15,6 @@ test('create tag', function () {
     ]);
 });
 
-
 test('can\'t create multiple tags of the same name', function () {
 
     Tag::create([
@@ -30,7 +29,6 @@ test('can\'t create multiple tags of the same name', function () {
         'name' => 'test',
     ]);
 })->throws(\Illuminate\Database\UniqueConstraintViolationException::class);
-
 
 test('tag has many events', function () {
     $tag = Tag::factory()->create();

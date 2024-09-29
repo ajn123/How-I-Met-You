@@ -2,9 +2,8 @@
 
 use App\Models\User;
 
-
 beforeEach(function () {
-   $this->user = User::factory()->create();
+    $this->user = User::factory()->create();
 });
 
 test('Can make request acting as user', function () {
@@ -25,7 +24,6 @@ test('can use sanctum through bearer token to make request', function () {
     ])->json('GET', '/api/events')
         ->assertStatus(200);
 });
-
 
 test('can make requests without session', function () {
     $data = [

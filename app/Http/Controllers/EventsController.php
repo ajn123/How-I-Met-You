@@ -12,7 +12,7 @@ class EventsController extends Controller
 {
     public function index(Request $request, EventFilter $filter)
     {
-        $events =Event::query();
+        $events = Event::query();
 
         $events = $filter->apply($events)->with('tags')->paginate(10);
 
