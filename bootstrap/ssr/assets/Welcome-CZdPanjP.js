@@ -54,20 +54,41 @@ function Event({ event }) {
     /* @__PURE__ */ jsx("p", { className: "text-lg col-span-2", children: event.description })
   ] });
 }
-function EventFilter({ setEvents, filterString, setParams }) {
+function EventFilter({ setParams, params }) {
   const [tags, setTags] = useState([]);
   useEffect(() => {
     axios.get("/api/tags").then((response) => {
       setTags(response.data);
     });
   }, []);
+  const [searchValue, getSearchValue] = useState("");
   const filter = (filter2) => {
-    setParams((prevState) => {
-      return {
-        ...prevState,
-        ...filter2
-      };
-    });
+    if (filter2 == null) {
+      setParams({});
+    } else {
+      setParams((prevState) => {
+        var _a, _b, _c;
+        if (filter2["tags"]) {
+          let queryTerm = (_a = filter2["tags"]) == null ? void 0 : _a[0];
+          if (((_b = prevState["tags"]) == null ? void 0 : _b.includes(queryTerm)) && filter2["tags"].includes(queryTerm)) {
+            filter2["tags"] = (_c = filter2["tags"]) == null ? void 0 : _c.filter(
+              (elem) => elem !== queryTerm
+            );
+            if (filter2["tags"].length == 0) {
+              delete filter2["tags"];
+            }
+          } else if (prevState["tags"] && filter2["tags"]) {
+            filter2["tags"] = [
+              ...filter2["tags"],
+              ...prevState["tags"]
+            ];
+          }
+        }
+        return {
+          ...filter2
+        };
+      });
+    }
   };
   return /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center p-4 bg-white rounded-lg shadow-lg my-4 border border-amber-900", children: [
     /* @__PURE__ */ jsx(
@@ -76,23 +97,33 @@ function EventFilter({ setEvents, filterString, setParams }) {
         className: "h-12 p-2",
         type: "search",
         placeholder: "Search",
-        onChange: (e) => filter({ searchName: e.target.value })
+        value: searchValue,
+        onChange: (e) => {
+          filter({ searchName: e.target.value });
+          getSearchValue(e.target.value);
+        }
       }
     ),
-    tags.map((tag, key) => /* @__PURE__ */ jsx(
-      "div",
-      {
-        onClick: () => filter(`tags=${tag.name}`),
-        className: "flex p-6 mb-4 flex-initial w-32 rounded-md text-center object-center hover:bg-black text-2xl hover:text-white transition-all ease-in justify-center border border-2 mx-4 font-bold" + (filterString.current === `tags=${tag.name}` ? " bg-black text-white" : ""),
-        children: tag.name
-      },
-      key
-    )),
+    tags.map((tag, key) => {
+      var _a;
+      return /* @__PURE__ */ jsx(
+        "div",
+        {
+          onClick: () => filter({ tags: [tag.name] }),
+          className: "flex p-6 mb-4 flex-initial w-32 rounded-md text-center object-center hover:bg-black text-2xl hover:text-white transition-all ease-in justify-center border-3 mx-4 font-bold" + (((_a = params["tags"]) == null ? void 0 : _a.includes(tag.name)) ? " bg-black text-white" : ""),
+          children: tag.name
+        },
+        key
+      );
+    }),
     /* @__PURE__ */ jsx(
       "div",
       {
-        onClick: () => filter(``),
-        className: "flex p-6 mb-4 flex-initial w-48 rounded-md text-center object-center hover:bg-black text-2xl hover:text-white transition-all ease-in justify-center border border-2 mx-4 font-bold",
+        onClick: () => {
+          filter(null);
+          getSearchValue("");
+        },
+        className: "flex p-6 mb-4 flex-initial w-48 rounded-md text-center object-center hover:bg-black text-2xl hover:text-white transition-all ease-in justify-center border mx-4 font-bold",
         children: "Clear Filters"
       }
     )
@@ -100,6 +131,7 @@ function EventFilter({ setEvents, filterString, setParams }) {
 }
 function EventList({}) {
   const [events, setEvents] = useState([]);
+  const [params, setParams] = useState({});
   const page = useRef(1);
   const ref = useRef(null);
   const maxPages = useRef(Number.POSITIVE_INFINITY);
@@ -108,7 +140,7 @@ function EventList({}) {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          getMoreEvents();
+          getMoreEvents(true);
         }
       },
       { threshold: 0.1 }
@@ -121,8 +153,7 @@ function EventList({}) {
         observer.unobserve(ref.current);
       }
     };
-  }, [ref]);
-  const [params, setParams] = useState({});
+  }, [ref, params]);
   useEffect(() => {
     getMoreEvents(false);
   }, [params]);
@@ -138,17 +169,34 @@ function EventList({}) {
       ...params,
       page: page.current
     };
+    console.log(`finalParams: ${JSON.stringify(finalParams)}`);
     const urlSearchParams = new URLSearchParams(finalParams);
     console.log(`/api/events?${urlSearchParams.toString()}`);
     axios.get(`/api/events?${urlSearchParams.toString()}`).then((response) => {
       maxPages.current = response.data.last_page;
-      setEvents((prevState) => [...prevState, ...response.data.data]);
+      if (!getMore) {
+        setEvents(response.data.data);
+      } else {
+        setEvents((prevState) => [
+          ...prevState,
+          ...response.data.data
+        ]);
+      }
     });
     page.current++;
   };
   return /* @__PURE__ */ jsxs(Fragment, { children: [
-    /* @__PURE__ */ jsx(EventFilter, { setEvents, filterString }),
-    events.length > 0 && /* @__PURE__ */ jsx(EventFilter, { setEvents, setParams }) && events.map((event, id) => /* @__PURE__ */ jsx(Event, { event }, id)),
+    /* @__PURE__ */ jsx(
+      EventFilter,
+      {
+        setEvents,
+        filterString,
+        setParams,
+        getMoreEvents,
+        params
+      }
+    ),
+    events.length > 0 && events.map((event, id) => /* @__PURE__ */ jsx(Event, { event }, id)),
     /* @__PURE__ */ jsx("div", { ref })
   ] });
 }

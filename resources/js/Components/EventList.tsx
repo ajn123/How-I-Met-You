@@ -9,6 +9,7 @@ export default function EventList({}) {
     const [events, setEvents] = useState([]);
 
     const [params, setParams] = useState({});
+    const [eventTotal, setEventTotal] = useState(0);
 
     const page = useRef(1);
 
@@ -66,6 +67,7 @@ export default function EventList({}) {
                 maxPages.current = response.data.last_page;
                 if (!getMore) {
                     setEvents(response.data.data);
+                    setEventTotal(response.data.total);
                 } else {
                     setEvents((prevState) => [
                         ...prevState,
@@ -79,10 +81,9 @@ export default function EventList({}) {
     return (
         <>
             <EventFilter
-                setEvents={setEvents}
-                filterString={filterString}
                 setParams={setParams}
-                getMoreEvents={getMoreEvents}
+                params={params}
+                eventsTotal={eventTotal}
             />
             {events.length > 0 &&
                 events.map((event, id) => <Event key={id} event={event} />)}
