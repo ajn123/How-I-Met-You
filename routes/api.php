@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/tokens/create', [App\Http\Controllers\TokenAuthController::class, 'register']);
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(\App\Http\Middleware\ApiRequest::class)->group(function () {
     Route::post('/tokens/destroy', [App\Http\Controllers\TokenAuthController::class, 'destroy']);
 
     Route::apiResource('events', App\Http\Controllers\EventsController::class);

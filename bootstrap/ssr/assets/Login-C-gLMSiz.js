@@ -1,6 +1,6 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { A as Auth } from "./AuthLayout-DV-ew2PM.js";
-import { useForm, router } from "@inertiajs/react";
+import { useForm } from "@inertiajs/react";
 import "react-toastify";
 import "react";
 function Login({ auth }) {
@@ -10,23 +10,22 @@ function Login({ auth }) {
   });
   function submit(e) {
     e.preventDefault();
-    post("login");
-    router.post("/login", data);
+    post("/login");
   }
   return /* @__PURE__ */ jsx(Auth, { auth, children: /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsxs(
     "form",
     {
-      className: "flex flex-col items-center p-4 bg-white rounded-lg shadow-lg justify-evenly",
+      className: "flex flex-col items-center gap-3",
       onSubmit: submit,
       children: [
-        /* @__PURE__ */ jsx("h1", { className: "text-2xl font-bold pb-2", children: "Login" }),
-        errors.email && /* @__PURE__ */ jsx("div", { children: errors.email }),
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-row items-center", children: [
-          /* @__PURE__ */ jsx("label", { className: "mr-2", htmlFor: "email", children: "Email:" }),
+        /* @__PURE__ */ jsx("h1", { className: "text-2xl font-bold pb-2 0", children: "Login" }),
+        errors.email && /* @__PURE__ */ jsx("div", { className: "font-bold text-red-500", children: errors.email }),
+        /* @__PURE__ */ jsxs("div", { className: "flex flex-row ", children: [
+          /* @__PURE__ */ jsx("label", { className: "w-64", htmlFor: "email", children: "Email:" }),
           /* @__PURE__ */ jsx(
             "input",
             {
-              className: "border-2 rounded-lg p-2",
+              className: "border-2 rounded-lg p-2 self-stretch",
               type: "text",
               id: "email",
               value: data.email,
@@ -35,7 +34,7 @@ function Login({ auth }) {
           )
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "flex flex-row items-center", children: [
-          /* @__PURE__ */ jsx("label", { className: "mr-2", htmlFor: "password", children: "Password:" }),
+          /* @__PURE__ */ jsx("label", { className: "w-64", htmlFor: "password", children: "Password:" }),
           /* @__PURE__ */ jsx(
             "input",
             {
@@ -51,7 +50,7 @@ function Login({ auth }) {
         /* @__PURE__ */ jsx(
           "button",
           {
-            className: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg mt-4",
+            className: "transition-all ease-in bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg mt-4",
             type: "submit",
             children: "Log in"
           }

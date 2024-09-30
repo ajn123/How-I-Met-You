@@ -18,13 +18,17 @@ export default function Login({ auth }) {
         <AuthLayout auth={auth}>
             <div>
                 <form
-                    className="flex flex-col items-center p-4 bg-white rounded-lg shadow-lg place-content-aroundy"
+                    className="flex flex-col items-center gap-3"
                     onSubmit={submit}
                 >
-                    <h1 className="text-2xl font-bold pb-2">Login</h1>
-                    {errors.email && <div>{errors.email}</div>}
-                    <div className="flex flex-row gap-1">
-                        <label className="mr-2 self-stretch" htmlFor="email">
+                    <h1 className="text-2xl font-bold pb-2 0">Login</h1>
+                    {errors.email && (
+                        <div className={"font-bold text-red-500"}>
+                            {errors.email}
+                        </div>
+                    )}
+                    <div className="flex flex-row ">
+                        <label className="w-64" htmlFor="email">
                             Email:
                         </label>
                         <input
@@ -36,7 +40,7 @@ export default function Login({ auth }) {
                         />
                     </div>
                     <div className="flex flex-row items-center">
-                        <label className="mr-2" htmlFor="password">
+                        <label className="w-64" htmlFor="password">
                             Password:
                         </label>
                         <input
@@ -51,7 +55,7 @@ export default function Login({ auth }) {
                         />
                     </div>
                     <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg mt-4"
+                        className="transition-all ease-in bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg mt-4"
                         type="submit"
                     >
                         Log in

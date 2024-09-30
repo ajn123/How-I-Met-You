@@ -59,6 +59,8 @@ function EventFilter({ setParams, params, eventsTotal }) {
   useEffect(() => {
     axios.get("/api/tags").then((response) => {
       setTags(response.data);
+    }).catch((error) => {
+      toast(error.response.data.message, { type: "error" });
     });
   }, []);
   const [searchValue, getSearchValue] = useState("");
