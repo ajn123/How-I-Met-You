@@ -1,8 +1,8 @@
-import { useForm } from "@inertiajs/react";
 import axios from "axios";
 import AuthLayout from "../Layouts/AuthLayout";
 import { toast } from "react-toastify";
 
+import { usePage, useForm, router } from "@inertiajs/react";
 export default function Login({ auth }) {
     const { data, setData, post, processing, errors } = useForm({
         email: "",
@@ -11,7 +11,9 @@ export default function Login({ auth }) {
 
     function submit(e: any) {
         e.preventDefault();
-        post("/login");
+        post("login");
+
+        router.post("/login", data);
     }
 
     return (

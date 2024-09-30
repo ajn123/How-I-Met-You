@@ -216,7 +216,7 @@ function Welcome({ auth, flash }) {
       /* @__PURE__ */ jsx("h1", { className: "text-6xl font-bold", children: "Find Events" }),
       /* @__PURE__ */ jsx("p", { className: "text-2xl mx-4 text-center", children: "Scroll down to see upcoming events or use the search bar." })
     ] }),
-    /* @__PURE__ */ jsx("div", { children: (auth == null ? void 0 : auth.user) && /* @__PURE__ */ jsx(EventList, {}) })
+    /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsx(EventList, {}) })
   ] });
 }
 export {

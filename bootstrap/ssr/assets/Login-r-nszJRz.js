@@ -1,6 +1,6 @@
 import { jsx, jsxs } from "react/jsx-runtime";
-import { useForm } from "@inertiajs/react";
 import { A as Auth } from "./AuthLayout-DV-ew2PM.js";
+import { useForm, router } from "@inertiajs/react";
 import "react-toastify";
 import "react";
 function Login({ auth }) {
@@ -10,7 +10,8 @@ function Login({ auth }) {
   });
   function submit(e) {
     e.preventDefault();
-    post("/login");
+    post("login");
+    router.post("/login", data);
   }
   return /* @__PURE__ */ jsx(Auth, { auth, children: /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsxs(
     "form",

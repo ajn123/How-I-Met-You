@@ -7,6 +7,7 @@ use App\Http\Requests\SignUpUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -31,12 +32,14 @@ class AuthController extends Controller
 
     public function login(LoginUserRequest $request)
     {
+        Log::debug("trying to login");
         if (auth()->attempt($request->only('email', 'password'))) {
             $user = User::where('email', $request->email)->first();
             $token = $user->createToken('apiToken')->plainTextToken;
 
-            session()->regenerate();
             auth()->login($user);
+
+            Log::debug('User logged in', ['csrf_token' => csrf_token()]);
             session()->flash('message', 'Login successful');
 
             return redirect()->intended(route('welcome', absolute: false));
