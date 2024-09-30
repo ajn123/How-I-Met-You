@@ -54,7 +54,7 @@ function Event({ event }) {
     /* @__PURE__ */ jsx("p", { className: "text-lg col-span-2", children: event.description })
   ] });
 }
-function EventFilter({ setParams, params }) {
+function EventFilter({ setParams, params, eventsTotal }) {
   const [tags, setTags] = useState([]);
   useEffect(() => {
     axios.get("/api/tags").then((response) => {
@@ -110,7 +110,7 @@ function EventFilter({ setParams, params }) {
         "div",
         {
           onClick: () => filter({ tags: [tag.name] }),
-          className: "flex p-6 mb-4 flex-initial w-32 rounded-md text-center object-center hover:bg-black text-2xl hover:text-white transition-all ease-in justify-center border-3 mx-4 font-bold" + (((_a = params["tags"]) == null ? void 0 : _a.includes(tag.name)) ? " bg-black text-white" : ""),
+          className: "flex p-6 mb-4 flex-initial w-32 rounded-md text-center object-center hover:bg-black text-2xl hover:text-white transition-all ease-in justify-center  border-4 mx-4 font-bold" + (((_a = params["tags"]) == null ? void 0 : _a.includes(tag.name)) ? " bg-black text-white" : ""),
           children: tag.name
         },
         key
@@ -123,8 +123,18 @@ function EventFilter({ setParams, params }) {
           filter(null);
           getSearchValue("");
         },
-        className: "flex p-6 mb-4 flex-initial w-48 rounded-md text-center object-center hover:bg-black text-2xl hover:text-white transition-all ease-in justify-center border mx-4 font-bold",
+        className: "flex p-6 mb-4 flex-initial w-48 rounded-md text-center object-center hover:bg-black text-2xl hover:text-white transition-all ease-in justify-center border-4 mx-4 font-bold",
         children: "Clear Filters"
+      }
+    ),
+    /* @__PURE__ */ jsxs(
+      "div",
+      {
+        className: "flex p-6 mb-4 flex-initial w-48 rounded-md text-center object-center text-2xl transition-all ease-in justify-center mx-4 font-bold",
+        children: [
+          "Events: ",
+          eventsTotal
+        ]
       }
     )
   ] });
@@ -132,10 +142,11 @@ function EventFilter({ setParams, params }) {
 function EventList({}) {
   const [events, setEvents] = useState([]);
   const [params, setParams] = useState({});
+  const [eventTotal, setEventTotal] = useState(0);
   const page = useRef(1);
   const ref = useRef(null);
   const maxPages = useRef(Number.POSITIVE_INFINITY);
-  const filterString = useRef("");
+  useRef("");
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -176,6 +187,7 @@ function EventList({}) {
       maxPages.current = response.data.last_page;
       if (!getMore) {
         setEvents(response.data.data);
+        setEventTotal(response.data.total);
       } else {
         setEvents((prevState) => [
           ...prevState,
@@ -189,11 +201,9 @@ function EventList({}) {
     /* @__PURE__ */ jsx(
       EventFilter,
       {
-        setEvents,
-        filterString,
         setParams,
-        getMoreEvents,
-        params
+        params,
+        eventsTotal: eventTotal
       }
     ),
     events.length > 0 && events.map((event, id) => /* @__PURE__ */ jsx(Event, { event }, id)),

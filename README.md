@@ -7,3 +7,5 @@ An app to manage events as well as let users create events to stay up to date in
 - React
 - Inertia
 - Typescript
+
+
