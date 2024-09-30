@@ -11,26 +11,24 @@ export default function Login({ auth }) {
 
     function submit(e: any) {
         e.preventDefault();
-        post("login");
-
-        router.post("/login", data);
+        post("/login");
     }
 
     return (
         <AuthLayout auth={auth}>
             <div>
                 <form
-                    className="flex flex-col items-center p-4 bg-white rounded-lg shadow-lg justify-evenly"
+                    className="flex flex-col items-center p-4 bg-white rounded-lg shadow-lg place-content-aroundy"
                     onSubmit={submit}
                 >
                     <h1 className="text-2xl font-bold pb-2">Login</h1>
                     {errors.email && <div>{errors.email}</div>}
-                    <div className="flex flex-row items-center">
-                        <label className="mr-2" htmlFor="email">
+                    <div className="flex flex-row gap-1">
+                        <label className="mr-2 self-stretch" htmlFor="email">
                             Email:
                         </label>
                         <input
-                            className="border-2 rounded-lg p-2"
+                            className="border-2 rounded-lg p-2 self-stretch"
                             type="text"
                             id="email"
                             value={data.email}

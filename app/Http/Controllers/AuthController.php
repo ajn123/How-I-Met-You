@@ -38,8 +38,7 @@ class AuthController extends Controller
             $token = $user->createToken('apiToken')->plainTextToken;
 
             auth()->login($user);
-
-            Log::debug('User logged in', ['csrf_token' => csrf_token()]);
+            session()->regenerate();
             session()->flash('message', 'Login successful');
 
             return redirect()->intended(route('welcome', absolute: false));
