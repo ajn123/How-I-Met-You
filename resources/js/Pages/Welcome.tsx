@@ -15,7 +15,7 @@ export default function Welcome({ auth, flash }) {
                     Scroll down to see upcoming events or use the search bar.
                 </p>
             </div>
-            <div>{auth?.user && <EventList />}</div>
+            <div>{<EventList />}</div>
         </AuthLayout>
     );
 }
