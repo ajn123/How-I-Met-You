@@ -15,17 +15,14 @@ class ApiRequest
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): \Illuminate\Http\JsonResponse
+    public function handle(Request $request, Closure $next)
     {
 
-        Log::debug("token:" . $request->bearerToken());
-        Log::debug("config token:" . config('API_TOKEN'));
-
-        if ($request->bearerToken() && $request->bearerToken() === env('API_TOKEN')) {
-            return $next($request);
+        if($request->host() != 'localhost')
+        {
+            return response('', 400);
         }
 
-        return response()->json(['error' => 'Unauthorized'], 401);
-
+        return $next($request);
     }
 }

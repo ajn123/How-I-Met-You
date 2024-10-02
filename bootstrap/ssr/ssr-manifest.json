@@ -1,34 +1,37 @@
 {
   "node_modules/laravel-vite-plugin/inertia-helpers/index.js": [],
   "resources/js/Components/Event.tsx": [
-    "/build/assets/Welcome-BGGV30D1.js"
+    "/build/assets/Welcome-B0xfn5kP.js"
   ],
   "resources/js/Components/EventFilter.tsx": [
-    "/build/assets/Welcome-BGGV30D1.js"
+    "/build/assets/Welcome-B0xfn5kP.js"
   ],
   "resources/js/Components/EventList.tsx": [
-    "/build/assets/Welcome-BGGV30D1.js"
+    "/build/assets/Welcome-B0xfn5kP.js"
   ],
   "resources/js/Components/NavBar.tsx": [
-    "/build/assets/AuthLayout-DV-ew2PM.js"
+    "/build/assets/AuthLayout-BmWGuR7e.js"
   ],
   "resources/js/Elements/Tag.tsx": [
-    "/build/assets/Welcome-BGGV30D1.js"
+    "/build/assets/Tag-CfkiokOz.js"
   ],
   "resources/js/Layouts/AuthLayout.tsx": [
-    "/build/assets/AuthLayout-DV-ew2PM.js"
+    "/build/assets/AuthLayout-BmWGuR7e.js"
   ],
   "resources/js/Pages/About.tsx": [
-    "/build/assets/About-DsRBN4VW.js"
+    "/build/assets/About-DODGv7DV.js"
   ],
   "resources/js/Pages/Login.tsx": [
-    "/build/assets/Login-C-gLMSiz.js"
+    "/build/assets/Login-dOoVMiIM.js"
+  ],
+  "resources/js/Pages/ShowEvent.tsx": [
+    "/build/assets/ShowEvent-BqmfeV_l.js"
   ],
   "resources/js/Pages/SignUp.tsx": [
-    "/build/assets/SignUp-CH12MwI1.js"
+    "/build/assets/SignUp-C09pD4to.js"
   ],
   "resources/js/Pages/Welcome.tsx": [
-    "/build/assets/Welcome-BGGV30D1.js"
+    "/build/assets/Welcome-B0xfn5kP.js"
   ],
   "resources/js/ssr.jsx": [],
   "vendor/tightenco/ziggy/dist/index.js": []

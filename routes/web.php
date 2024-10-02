@@ -20,6 +20,8 @@ Route::get('/login', function () {
 
 Route::inertia('/about', 'About')->name('about');
 
-Route::group(['middleware' => ['web']], function () {
-    // your routes here
+Route::get('/events/{event}', function (\App\Models\Event $event) {
+   return \Inertia\Inertia::render('ShowEvent', [
+       'event' => $event->load('tags')
+   ]);
 });

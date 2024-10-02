@@ -22,7 +22,7 @@ createServer(
     render: ReactDOMServer.renderToString,
     resolve: (name) => resolvePageComponent(
       `./Pages/${name}.tsx`,
-      /* @__PURE__ */ Object.assign({ "./Pages/About.tsx": () => import("./assets/About-DsRBN4VW.js"), "./Pages/Login.tsx": () => import("./assets/Login-C-gLMSiz.js"), "./Pages/SignUp.tsx": () => import("./assets/SignUp-CH12MwI1.js"), "./Pages/Welcome.tsx": () => import("./assets/Welcome-BGGV30D1.js") })
+      /* @__PURE__ */ Object.assign({ "./Pages/About.tsx": () => import("./assets/About-DODGv7DV.js"), "./Pages/Login.tsx": () => import("./assets/Login-dOoVMiIM.js"), "./Pages/ShowEvent.tsx": () => import("./assets/ShowEvent-BqmfeV_l.js"), "./Pages/SignUp.tsx": () => import("./assets/SignUp-C09pD4to.js"), "./Pages/Welcome.tsx": () => import("./assets/Welcome-B0xfn5kP.js") })
     ),
     setup: ({ App, props }) => /* @__PURE__ */ jsx(App, { ...props })
   })

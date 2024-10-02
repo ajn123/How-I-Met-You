@@ -1,31 +1,10 @@
-import { jsx, Fragment, jsxs } from "react/jsx-runtime";
-import { A as Auth } from "./AuthLayout-DV-ew2PM.js";
+import { jsx, jsxs, Fragment } from "react/jsx-runtime";
+import { A as Auth } from "./AuthLayout-BmWGuR7e.js";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { T as Tag } from "./Tag-CfkiokOz.js";
+import { Link } from "@inertiajs/react";
 import { toast } from "react-toastify";
-import "@inertiajs/react";
-function Tag({ tag }) {
-  let [color, setColor] = useState("red");
-  useEffect(() => {
-    let x = Math.floor(Math.random() * 3);
-    if (x === 0) {
-      setColor("red");
-    } else if (x === 1) {
-      setColor("blue");
-    } else if (x === 2) {
-      setColor("green");
-    } else {
-      setColor("yellow");
-    }
-  }, []);
-  return /* @__PURE__ */ jsx(Fragment, { children: /* @__PURE__ */ jsx(
-    "button",
-    {
-      className: `py-2 my-2 px-4 text-black shadow-md no-underline rounded-full bg-${color}-300 font-sans font-semibold text-sm border-${color} btn-primary hover:text-white hover:bg-${color}-600 transition-all ease-in focus:outline-none active:shadow-none mr-2`,
-      children: tag.name
-    }
-  ) });
-}
 function Event({ event }) {
   const date = new Date(event.date);
   const options = {
@@ -36,23 +15,20 @@ function Event({ event }) {
     timeZone: "EST"
   };
   const formattedDate = date.toLocaleDateString("en-US", options);
-  return /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 p-4 bg-white rounded-lg shadow-lg my-4 border border-amber-900", children: [
-    /* @__PURE__ */ jsxs("p", { className: "text-2xl font-bold col-span-2 lg:col-span-1", children: [
-      event.name,
-      /* @__PURE__ */ jsx(
-        "a",
-        {
-          href: event.url,
-          target: "_blank",
-          className: "ml-2 my-2 p-2 shadow-lg rounded-md bg-blue-300 hover:bg-blue-700 hover:text-white transition-all ease-in text-lg font-bold",
-          children: "Website"
-        }
-      )
-    ] }),
-    /* @__PURE__ */ jsx("div", { className: "col-span-2 lg:col-span-1", children: event.tags.map((tag) => /* @__PURE__ */ jsx(Tag, { tag }, tag.id)) }),
-    /* @__PURE__ */ jsx("p", { className: "text-lg col-span-2 font-bold", children: formattedDate }),
-    /* @__PURE__ */ jsx("p", { className: "text-lg col-span-2", children: event.description })
-  ] });
+  return /* @__PURE__ */ jsx(
+    Link,
+    {
+      href: `/events/${event.id}`,
+      data: { event },
+      preserveState: true,
+      children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 p-4 bg-white rounded-lg shadow-lg my-4 border border-amber-900 hover:bg-blue-200 transition-all ease-in", children: [
+        /* @__PURE__ */ jsx("p", { className: "text-2xl font-bold col-span-2 lg:col-span-1", children: event.name }),
+        /* @__PURE__ */ jsx("div", { className: "col-span-2 lg:col-span-1", children: event.tags.map((tag) => /* @__PURE__ */ jsx(Tag, { tag }, tag.id)) }),
+        /* @__PURE__ */ jsx("p", { className: "text-lg col-span-2 font-bold", children: formattedDate }),
+        /* @__PURE__ */ jsx("p", { className: "text-lg col-span-2", children: event.description })
+      ] })
+    }
+  );
 }
 function EventFilter({ setParams, params, eventsTotal }) {
   const [tags, setTags] = useState([]);
@@ -93,19 +69,6 @@ function EventFilter({ setParams, params, eventsTotal }) {
     }
   };
   return /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center p-4 bg-white rounded-lg shadow-lg my-4 border border-amber-900", children: [
-    /* @__PURE__ */ jsx(
-      "input",
-      {
-        className: "h-12 p-2",
-        type: "search",
-        placeholder: "Search",
-        value: searchValue,
-        onChange: (e) => {
-          filter({ searchName: e.target.value });
-          getSearchValue(e.target.value);
-        }
-      }
-    ),
     tags.map((tag, key) => {
       var _a;
       return /* @__PURE__ */ jsx(
@@ -129,12 +92,25 @@ function EventFilter({ setParams, params, eventsTotal }) {
         children: "Clear Filters"
       }
     ),
+    /* @__PURE__ */ jsx(
+      "input",
+      {
+        className: "h-12 p-2",
+        type: "search",
+        placeholder: "Search",
+        value: searchValue,
+        onChange: (e) => {
+          filter({ searchName: e.target.value });
+          getSearchValue(e.target.value);
+        }
+      }
+    ),
     /* @__PURE__ */ jsxs(
       "div",
       {
         className: "flex p-6 mb-4 flex-initial w-48 rounded-md text-center object-center text-2xl transition-all ease-in justify-center mx-4 font-bold",
         children: [
-          "Events: ",
+          "Events:oeuoeu ",
           eventsTotal
         ]
       }

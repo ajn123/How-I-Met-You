@@ -1,6 +1,6 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { useForm } from "@inertiajs/react";
-import { A as Auth } from "./AuthLayout-DV-ew2PM.js";
+import { A as Auth } from "./AuthLayout-BmWGuR7e.js";
 import "react-toastify";
 import "react";
 function SignUp() {

@@ -1,5 +1,5 @@
 import { jsx, jsxs } from "react/jsx-runtime";
-import { A as Auth } from "./AuthLayout-DV-ew2PM.js";
+import { A as Auth } from "./AuthLayout-BmWGuR7e.js";
 import "@inertiajs/react";
 import "react-toastify";
 import "react";

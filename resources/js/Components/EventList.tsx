@@ -89,12 +89,6 @@ export default function EventList({}) {
                 events.map((event, id) => <Event key={id} event={event} />)}
 
             <div ref={ref}></div>
-            {/*<button*/}
-            {/*    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"*/}
-            {/*    onClick={getMoreEvents}*/}
-            {/*>*/}
-            {/*    Load More*/}
-            {/*</button>*/}
         </>
     );
 }

@@ -52,17 +52,6 @@ export default function EventFilter({ setParams, params, eventsTotal }) {
 
     return (
         <div className="flex flex-wrap items-center p-4 bg-white rounded-lg shadow-lg my-4 border border-amber-900">
-            <input
-                className={"h-12 p-2"}
-                type="search"
-                placeholder="Search"
-                value={searchValue}
-                onChange={(e) => {
-                    filter({ searchName: e.target.value });
-                    getSearchValue(e.target.value);
-                }}
-            />
-
             {tags.map((tag, key) => (
                 <div
                     key={key}
@@ -88,6 +77,17 @@ export default function EventFilter({ setParams, params, eventsTotal }) {
             >
                 Clear Filters
             </div>
+
+            <input
+                className={"h-12 p-2 border-2 border-black rounded-sm"}
+                type="search"
+                placeholder="Search"
+                value={searchValue}
+                onChange={(e) => {
+                    filter({ searchName: e.target.value });
+                    getSearchValue(e.target.value);
+                }}
+            />
 
             <div
                 className={
