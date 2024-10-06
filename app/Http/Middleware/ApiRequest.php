@@ -3,10 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use http\Client\Response;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Log;
 
 class ApiRequest
 {
@@ -18,8 +15,7 @@ class ApiRequest
     public function handle(Request $request, Closure $next)
     {
 
-        if($request->host() != 'localhost')
-        {
+        if ($request->host() != 'localhost') {
             return response('', 400);
         }
 

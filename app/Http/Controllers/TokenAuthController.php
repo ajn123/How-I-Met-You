@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LoginUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class TokenAuthController extends Controller
 {
     public function register(Request $request)
     {
-            $token = User::first()->createToken('my-app-token')->plainTextToken;
+        $token = User::first()->createToken('my-app-token')->plainTextToken;
 
-            return response()->json(['token' => $token], 200);
-
+        return response()->json(['token' => $token], 200);
 
     }
 

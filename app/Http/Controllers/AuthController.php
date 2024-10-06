@@ -32,7 +32,7 @@ class AuthController extends Controller
 
     public function login(LoginUserRequest $request)
     {
-        Log::debug("trying to login");
+        Log::debug('trying to login');
         if (auth()->attempt($request->only('email', 'password'))) {
             $user = User::where('email', $request->email)->first();
             $token = $user->createToken('apiToken')->plainTextToken;
