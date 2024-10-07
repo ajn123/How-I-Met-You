@@ -35,20 +35,17 @@ test('events can have many tags', function () {
         ->and($this->event->tags->count($this->event->tags))->toBe(3);
 });
 
-
-test('inFuture scope gets future events', function() {
+test('inFuture scope gets future events', function () {
 
     Event::truncate();
 
     Event::factory()->withUser()->count(1)->create([
-        'date' => now()->addDay()
+        'date' => now()->addDay(),
     ]);
 
     Event::factory()->withUser()->count(1)->create([
-        'date' => now()->subDay()
+        'date' => now()->subDay(),
     ]);
-
-
     $events = \App\Models\Event::inFuture()->get();
     $this->assertCount(1, $events);
 })->repeat(12);
