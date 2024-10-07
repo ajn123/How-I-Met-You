@@ -9,7 +9,6 @@ An app to manage events as well as let users create events to stay up to date in
 - Typescript
 
 
-
 ## Seeding
 - Run the `sail artisan db:seed` command
 
@@ -21,7 +20,6 @@ sail test
 
 ## Run Pint
 run `./vendor/bin/pint` for code formatting 
-
 
 ## Creating a MR
 - All Merge Requests will be run against pint (currently version 1.17) and run all the tests, please check if they pass when you push a commit.
