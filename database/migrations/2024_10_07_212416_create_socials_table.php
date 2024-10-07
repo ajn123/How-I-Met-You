@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-
-        Schema::table('events', function (Blueprint $table) {
-            $table->index('date');
+        Schema::create('socials', function (Blueprint $table) {
+            $table->id();
+            $table->enum('type', \App\Enums\Social::values());
+            $table->string('tag');
+            $table->foreignIdFor(\App\Models\Event::class)->constrained();
+            $table->timestamps();
         });
     }
 
@@ -22,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('events', function (Blueprint $table) {
-            $table->dropIndex('date');
-        });
+        Schema::dropIfExists('socials');
     }
 };

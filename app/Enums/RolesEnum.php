@@ -2,8 +2,11 @@
 
 namespace App\Enums;
 
+use App\Traits\EnumTrait;
+
 enum RolesEnum: string
 {
+    use EnumTrait;
     case ADMIN = 'admin';
     case CREATE_EVENTS = 'create events';
     case DELETE_EVENTS = 'delete own events';

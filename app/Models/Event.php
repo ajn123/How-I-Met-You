@@ -36,6 +36,11 @@ class Event extends Model
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
+    public function socials()
+    {
+        return $this->hasMany(Social::class);
+    }
+
     public function scopeSearchTags($query, ...$tags): \Illuminate\Support\Collection
     {
         return Tag::with('events')
