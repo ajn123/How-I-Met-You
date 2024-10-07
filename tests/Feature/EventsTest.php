@@ -37,7 +37,7 @@ test('events can have many tags', function () {
 
 test('inFuture scope gets future events', function () {
 
-    Event::truncate();
+    Event::where('id', '>', 0)->delete();
 
     Event::factory()->withUser()->count(1)->create([
         'date' => now()->addDay(),
