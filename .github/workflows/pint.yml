@@ -12,5 +12,4 @@ jobs:
             verboseMode: true
             testMode: true
             pintVersion: 1.8.0
-            onlyDirty: true
           
