@@ -10,7 +10,8 @@ An app to manage events as well as let users create events to stay up to date in
 
 
 
-
+## Seeding
+- Run the `sail artisan db:seed` command
 
 ## Run Tests
 - tests will empty the database upon each run, reseed it to bring back testing data
@@ -18,6 +19,8 @@ An app to manage events as well as let users create events to stay up to date in
 sail test
 ```
 
+## Run Pint
+run `./vendor/bin/pint` for code formatting 
 
 
 ## Creating a MR
