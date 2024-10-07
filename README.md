@@ -17,3 +17,8 @@ An app to manage events as well as let users create events to stay up to date in
 ```shell
 sail test
 ```
+
+
+
+## Creating a MR
+- All Merge Requests will be run against pint (currently version 1.17) and run all the tests, please check if they pass when you push a commit.
