@@ -4,6 +4,7 @@ use App\Enums\RolesEnum;
 use App\Models\Event;
 use App\Models\Tag;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Spatie\Permission\Models\Permission;
 
@@ -39,7 +40,7 @@ test('user with permission can create event', function () {
     $data = [
         'name' => fake()->sentence,
         'description' => fake()->paragraph,
-        'date' => fake()->date,
+        'date' => \Carbon\Carbon::now()->format('Y-m-d H:i:s'),
         'url' => fake()->url,
     ];
     $response = $this->actingAs($this->user)->post('/api/events', $data);
@@ -48,7 +49,7 @@ test('user with permission can create event', function () {
     $this->assertDatabaseHas('events', [
         'name' => $data['name'],
         'description' => $data['description'],
-        'date' => $data['date'],
+        'date' => Carbon::make($data['date'])->format('Y-m-d H:i:s'),
         'url' => $data['url'],
     ]);
 });
