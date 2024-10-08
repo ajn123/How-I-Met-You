@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
     {
 
         User::truncate();
-        Event::truncate();
+
+        Event::where('id', '>', 0)->delete();
         Taggable::truncate();
         Tag::where('id', '>', 0)->delete();
 

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('socials', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', \App\Enums\Social::values());
-            $table->string('tag');
-            $table->foreignIdFor(\App\Models\Event::class)->constrained();
+            $table->enum('type', \App\Enums\SocialMediaTypes::values());
+            $table->string('url');
+            $table->foreignIdFor(\App\Models\Event::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

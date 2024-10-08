@@ -2,7 +2,6 @@
 
 use App\Enums\RolesEnum;
 use App\Models\Event;
-use App\Models\Tag;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -12,17 +11,19 @@ uses(Tests\TestCase::class)->in('Feature');
 
 beforeEach(function () {
     $this->user = User::factory()->create();
-    $this->event = Event::factory()->withUser($this->user)->create();
+    $this->event = Event::factory()->hasTags(1)->hasSocials(2)->futureDates()->withUser($this->user)->create();
 
-    $this->event->tags()->attach(Tag::factory()->count(1)->create());
 });
 
-test('guest can retrieve all events with tags', function () {
-    $user = User::factory()->has(Event::factory()->count(5))->create();
+test('guest can retrieve all events with tag and socials', function () {
+    $user = User::factory()->has(Event::factory()->hasTags(1)->hasSocials(2)->futureDates()->count(5))->create();
     $response = $this->actingAs($user)->get('/api/events');
+
     $response->assertOk();
+
     $response->assertJson(fn (AssertableJson $json) => $json->has('data', 6)->etc());
-    $response->assertJson(fn (AssertableJson $json) => $json->where('data.0.tags.0.name', $this->event->tags()->first()->name)->etc());
+    $response->assertJson(fn (AssertableJson $json) => $json->where('data.0.tags.0.name', Event::inFuture()->first()->tags->first()->name)->etc());
+    $response->assertJson(fn (AssertableJson $json) => $json->where('data.0.socials.0.url', Event::inFuture()->first()->socials->first()->url)->etc());
 });
 
 test('guest can retrieve single event', function () {

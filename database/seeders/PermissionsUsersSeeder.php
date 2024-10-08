@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Enums\RolesEnum;
 use App\Models\Event;
+use App\Models\Social;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
@@ -83,6 +84,7 @@ class PermissionsUsersSeeder extends Seeder
             $event->tags()->sync(
                 Tag::all()->random(2)->pluck('id')->toArray()
             );
+            Social::factory()->count(rand(1, 3))->create(['event_id' => $event->id]);
         });
 
     }

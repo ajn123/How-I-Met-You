@@ -20,12 +20,21 @@ class EventFactory extends Factory
         return [
             'name' => fake()->name,
             'description' => fake()->text,
-            'date' => fake()->dateTimeBetween('-1 year', '+1 year'),
+            'date' => fake()->dateTimeBetween('-1 year', '+2 year'),
             'enabled' => true,
             'url' => fake()->url,
             // Because we create users with events, this was creating uncessary users, uncomment at your own risk
             // 'user_id' => User::factory()->create(),
         ];
+    }
+
+    public function futureDates(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'date' => fake()->dateTimeBetween('+1 year', '+2 year'),
+            ];
+        });
     }
 
     public function withUser($user = null): Factory

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\SocialMediaTypes;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,8 @@ class SocialFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'type' => $this->faker->randomElement(SocialMediaTypes::values()),
+            'url' => $this->faker->url,
         ];
     }
 }
