@@ -9,6 +9,17 @@ An app to manage events as well as let users create events to stay up to date in
 - Typescript
 
 
+# Get Me Running
+- Make sure you have Docker Desktop application and after you clone the app, cd into it and run the following command:
+```
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v "$(pwd):/var/www/html" \
+    -w /var/www/html \
+    laravelsail/php83-composer:latest \
+    composer install --ignore-platform-reqs 
+```
+
 ## Seeding
 - Run the `sail artisan db:seed` command
 
