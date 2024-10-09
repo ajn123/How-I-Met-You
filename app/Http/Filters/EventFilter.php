@@ -8,6 +8,11 @@ class EventFilter extends QueryFilter
 {
     public function tags($value): Builder
     {
+
+        if (! $value) {
+            return $this->builder;
+        }
+
         return $this->builder->whereHas('tags', function ($q) use ($value) {
             $q->whereIn('name', explode(',', $value));
         });
