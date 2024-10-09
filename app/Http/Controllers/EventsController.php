@@ -14,7 +14,7 @@ class EventsController extends Controller
     {
         $events = Event::query();
 
-        $events = $filter->apply($events)->with(['tags', 'socials', 'locations'])->inFuture()->distinct()->paginate(10);
+        $events = $filter->apply($events)->with(['tags', 'socials', 'locations'])->inFuture()->paginate(10);
 
         return response()->json($events);
     }
