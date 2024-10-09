@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Event;
+use App\Models\Location;
 use App\Models\Tag;
 use App\Models\Taggable;
 use App\Models\User;
@@ -22,8 +23,9 @@ class DatabaseSeeder extends Seeder
         Event::where('id', '>', 0)->delete();
         Taggable::truncate();
         Tag::where('id', '>', 0)->delete();
+        Location::where('id', '>', 0)->delete();
 
-        $user = User::factory()->has(Event::factory(10))->create([
+        $user = User::factory()->has(Event::factory(10)->has(Location::factory()->count(3)))->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);

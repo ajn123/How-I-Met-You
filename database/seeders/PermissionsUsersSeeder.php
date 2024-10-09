@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Enums\RolesEnum;
 use App\Models\Event;
+use App\Models\Location;
 use App\Models\Social;
 use App\Models\Tag;
 use App\Models\User;
@@ -58,7 +59,7 @@ class PermissionsUsersSeeder extends Seeder
 
         $users = User::factory()->count(4)->create();
 
-        Event::factory()->forEachSequence(
+        Event::factory()->has(Location::factory())->forEachSequence(
             ...Collection::times(250, function () use ($users) {
                 return ['user_id' => $users->random()];
             })
@@ -85,6 +86,7 @@ class PermissionsUsersSeeder extends Seeder
                 Tag::all()->random(2)->pluck('id')->toArray()
             );
             Social::factory()->count(rand(1, 3))->create(['event_id' => $event->id]);
+
         });
 
     }

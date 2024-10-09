@@ -17,9 +17,7 @@ return new class extends Migration
             $table->string('geocomplete')->nullable();
             $table->float('latitude')->nullable();
             $table->float('longitude')->nullable();
-            $table->foreignIdFor(\App\Models\Event::class)->nullable()->constrained()->cascadeOnDelete();
             $table->timestamps();
-
         });
     }
 

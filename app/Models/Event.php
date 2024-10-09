@@ -36,6 +36,11 @@ class Event extends Model
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
+    public function locations()
+    {
+        return $this->belongsToMany(Location::class);
+    }
+
     public function socials()
     {
         return $this->hasMany(Social::class);

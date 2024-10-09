@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('events', function (Blueprint $table) {
+        Schema::create('event_location', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->dateTime('date')->nullable();
-            $table->string('url')->nullable();
-            $table->boolean('enabled')->default(true);
-            $table->foreignIdFor(\App\Models\User::class, 'user_id');
+            $table->foreignIdFor(\App\Models\Event::class)->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\Location::class)->nullable()->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('events');
+        Schema::dropIfExists('event_location');
     }
 };
