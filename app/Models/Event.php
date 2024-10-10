@@ -60,4 +60,9 @@ class Event extends Model
     {
         return $query->where('date', '>=', now()->toDateString())->orderBy('date');
     }
+
+    public function scopeEnabled(Builder $query): Builder
+    {
+        return $query->where('enabled', true);
+    }
 }

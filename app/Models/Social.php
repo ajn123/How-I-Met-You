@@ -9,6 +9,11 @@ class Social extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'type',
+        'url',
+    ];
+
     public function event()
     {
         return $this->belongsTo(Event::class);

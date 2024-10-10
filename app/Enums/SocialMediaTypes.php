@@ -3,8 +3,9 @@
 namespace App\Enums;
 
 use App\Traits\EnumTrait;
+use Filament\Support\Contracts\HasLabel;
 
-enum SocialMediaTypes: string
+enum SocialMediaTypes: string implements HasLabel
 {
     use EnumTrait;
     case TWITTER = 'twitter';
@@ -13,4 +14,14 @@ enum SocialMediaTypes: string
     case YOUTUBE = 'youtube';
     case TWITCH = 'twitch';
 
+    public function getLabel(): ?string
+    {
+        return match ($this) {
+            self::TWITTER => 'Twitter',
+            self::FACEBOOK => 'Facebook',
+            self::INSTAGRAM => 'Instagram',
+            self::YOUTUBE => 'Youtube',
+            self::TWITCH => 'Twitch',
+        };
+    }
 }
