@@ -17,6 +17,7 @@ class Event extends Model
         'date',
         'user_id',
         'url',
+        'enabled',
     ];
 
     protected $casts = [

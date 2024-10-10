@@ -55,6 +55,8 @@ class EventResource extends Resource
     {
         return [
             RelationManagers\SocialsRelationManager::class,
+            RelationManagers\LocationsRelationManager::class,
+            RelationManagers\TagsRelationManager::class
         ];
     }
 
