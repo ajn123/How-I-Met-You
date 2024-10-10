@@ -34,8 +34,9 @@ class EventResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('name')->searchable(),
                 Tables\Columns\TextColumn::make('date'),
+                Tables\Columns\BooleanColumn::make('enabled')->searchable(),
 
             ])
             ->filters([
