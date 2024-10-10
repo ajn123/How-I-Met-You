@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Enums\RolesEnum;
 use App\Http\Filters\EventFilter;
-use App\Http\Requests\EventRequest;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class EventsController extends Controller
 {
@@ -22,11 +23,24 @@ class EventsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(EventRequest $request): \Illuminate\Http\JsonResponse
+    public function store(Request $request): \Illuminate\Http\JsonResponse
     {
+
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'date' => ['required', 'date'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
         //        if (! $request->user() || ! $request->user()->hasPermissionTo(RolesEnum::CREATE_EVENTS)) {
         //            return response()->json(['error' => 'Unauthorized'], 401);
         //        }
+
+        Log::debug($request->all());
         $event = Event::create($request->all());
 
         return response()->json([
