@@ -18,7 +18,7 @@ return new class extends Migration
             $table->dateTime('date')->nullable();
             $table->string('url')->nullable();
             $table->boolean('enabled')->default(true);
-            $table->foreignIdFor(\App\Models\User::class, 'user_id');
+            $table->foreignIdFor(\App\Models\User::class, 'user_id')->nullable();
             $table->timestamps();
         });
     }

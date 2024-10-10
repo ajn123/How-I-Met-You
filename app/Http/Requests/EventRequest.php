@@ -24,7 +24,7 @@ class EventRequest extends FormRequest
         return [
             'name' => 'required|string',
             'description' => 'required|string',
-            'date' => 'required|date',
+            'date' => 'date',
             'url' => 'url',
         ];
     }

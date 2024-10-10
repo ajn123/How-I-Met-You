@@ -24,12 +24,15 @@ class EventsController extends Controller
      */
     public function store(EventRequest $request): \Illuminate\Http\JsonResponse
     {
-        if (! $request->user() || ! $request->user()->hasPermissionTo(RolesEnum::CREATE_EVENTS)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-        $event = $request->user()->events()->create($request->all());
+//        if (! $request->user() || ! $request->user()->hasPermissionTo(RolesEnum::CREATE_EVENTS)) {
+//            return response()->json(['error' => 'Unauthorized'], 401);
+//        }
+        $event = Event::create($request->all());
 
-        return response()->json($event, 201);
+        return response()->json([
+            'data' => $event,
+            'message' => 'Event created successfully',
+        ], 201);
     }
 
     public function show(Event $event)
