@@ -45,15 +45,12 @@ class Location extends Model
      * Used by the Filament Google Maps package.
      *
      * Requires the 'location' attribute be included in this model's $fillable array.
-     *
-     * @return array
      */
-
     public function getLocationAttribute(): array
     {
         return [
-            "lat" => (float)$this->latitude,
-            "lng" => (float)$this->longitude,
+            'lat' => (float) $this->latitude,
+            'lng' => (float) $this->longitude,
         ];
     }
 
@@ -64,14 +61,10 @@ class Location extends Model
      * Used by the Filament Google Maps package.
      *
      * Requires the 'location' attribute be included in this model's $fillable array.
-     *
-     * @param ?array $location
-     * @return void
      */
     public function setLocationAttribute(?array $location): void
     {
-        if (is_array($location))
-        {
+        if (is_array($location)) {
             $this->attributes['latitude'] = $location['lat'];
             $this->attributes['longitude'] = $location['lng'];
             unset($this->attributes['location']);
@@ -97,14 +90,11 @@ class Location extends Model
      * Get the name of the computed location attribute
      *
      * Used by the Filament Google Maps package.
-     *
-     * @return string
      */
     public static function getComputedLocation(): string
     {
         return 'location';
     }
-
 
     public function events()
     {

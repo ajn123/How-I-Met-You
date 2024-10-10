@@ -9,8 +9,6 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class LocationsRelationManager extends RelationManager
 {
@@ -33,9 +31,9 @@ class LocationsRelationManager extends RelationManager
                     ->defaultZoom(10) // default zoom level when opening form
                     ->autocomplete('name') // field on form to use as Places geocompletion field
                     ->defaultLocation([38.904974072966, -77.003001885428]) // default for new forms
-                    ->clickable(true)
+                    ->clickable(true),
 
-        ]);
+            ]);
     }
 
     public function table(Table $table): Table
