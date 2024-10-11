@@ -30,19 +30,20 @@ class EventsController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'date' => ['required', 'date'],
-        ]);
+            'url' => ['sometimes', 'url']]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+            return response()->json(['errors' => $validator->validate()], 422);
         }
 
         //        if (! $request->user() || ! $request->user()->hasPermissionTo(RolesEnum::CREATE_EVENTS)) {
         //            return response()->json(['error' => 'Unauthorized'], 401);
         //        }
 
-        Log::debug($request->all());
-        $event = Event::create($request->all());
+        $request->merge(['enabled' => false]);
+        $event = Event::query()->create($request->all());
 
+        //Log::debug('Event created: ' . $event->toJson());
         return response()->json([
             'data' => $event,
             'message' => 'Event created successfully',
