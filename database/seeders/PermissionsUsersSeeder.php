@@ -61,7 +61,8 @@ class PermissionsUsersSeeder extends Seeder
 
         Event::factory()->has(Location::factory())->forEachSequence(
             ...Collection::times(250, function () use ($users) {
-                return ['user_id' => $users->random()];
+                return ['user_id' => $users->random(),
+                    'image_url' => 'https://kicking-grass-touch-dc.s3.amazonaws.com/events/ACaUh06NFHBNDmw2kKJ696OM8xVEwOJgeSu7Jyqo.jpg', ];
             })
         )->create();
 

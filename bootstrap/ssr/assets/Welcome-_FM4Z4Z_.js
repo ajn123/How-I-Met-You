@@ -192,7 +192,7 @@ function Welcome({ auth, flash }) {
   return /* @__PURE__ */ jsxs(Auth, { auth, flash, children: [
     /* @__PURE__ */ jsxs("div", { className: "h-96 bg-cyan-200 flex flex-col justify-center items-center rounded-b-md shadow-2xl", children: [
       /* @__PURE__ */ jsx("h1", { className: "text-6xl font-bold", children: "Find Events" }),
-      /* @__PURE__ */ jsx("p", { className: "text-2xl mx-4 text-center", children: "Scroll down to see upcoming events or use the search bar." })
+      /* @__PURE__ */ jsx("p", { className: "text-2xl mx-4 text-center", children: "Scroll down to see upcoming events or use the search bar.euooeu" })
     ] }),
     /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsx(EventList, {}) })
   ] });

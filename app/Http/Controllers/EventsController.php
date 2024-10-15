@@ -7,6 +7,7 @@ use App\Http\Filters\EventFilter;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class EventsController extends Controller
@@ -20,6 +21,14 @@ class EventsController extends Controller
         return response()->json($events);
     }
 
+    public function uploadImage(Request $request)
+    {
+        $path = $request->file('image')->store('events', 's3');
+        Log::debug('image uploaded to: '.Storage::disk()->url($path));
+
+        return response()->json(['url' => Storage::disk()->url($path)], 201);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -30,7 +39,8 @@ class EventsController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'date' => ['required', 'date'],
-            'url' => ['sometimes', 'url']]);
+            'url' => ['sometimes', 'url'],
+            'image_url' => ['sometimes', 'string']], );
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->validate()], 422);
@@ -39,6 +49,12 @@ class EventsController extends Controller
         //        if (! $request->user() || ! $request->user()->hasPermissionTo(RolesEnum::CREATE_EVENTS)) {
         //            return response()->json(['error' => 'Unauthorized'], 401);
         //        }
+
+        if ($request->get('image_url')) {
+            $urlName = rand(1, 100000).'/500/300final.jpg';
+            Storage::put($urlName, ($request->get('image_url')));
+            $request->merge(['image_url' => $urlName]);
+        }
 
         $request->merge(['enabled' => false]);
         $event = Event::query()->create($request->all());
