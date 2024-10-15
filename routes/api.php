@@ -11,5 +11,4 @@ Route::middleware(\App\Http\Middleware\ApiRequest::class)->group(function () {
     Route::apiResource('tags', \App\Http\Controllers\TagsController::class)->only('index');
 
     Route::post('/events/image', [App\Http\Controllers\EventsController::class, 'uploadImage']);
-    Route::get('/events/{event}/image', [App\Http\Controllers\EventsController::class, 'getImage']);
 });

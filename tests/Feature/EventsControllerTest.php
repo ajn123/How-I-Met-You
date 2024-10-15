@@ -4,6 +4,8 @@ use App\Enums\RolesEnum;
 use App\Models\Event;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Spatie\Permission\Models\Permission;
 
@@ -99,4 +101,19 @@ test('user can Not delete event because they don\'t have permission', function (
     $response = $this->actingAs($this->user)->delete('/api/events/'.$this->event->id);
     $response->assertStatus(401);
     $this->assertDatabaseCount('events', 1);
+});
+
+test('can upload images for event and return the url', function () {
+    Storage::fake('events');
+
+    $response = $this->json('POST', '/api/events/image', [
+        'image' => UploadedFile::fake()->image('photo1.jpg'),
+    ]);
+
+    $response->assertStatus(201);
+
+    $response->assertJson(fn (AssertableJson $json) => $json
+        ->where('url', $response->json('url'))
+        ->etc()
+    );
 });
