@@ -12,6 +12,7 @@ class Social extends Model
     protected $fillable = [
         'type',
         'url',
+        'event_id',
     ];
 
     public function event()
