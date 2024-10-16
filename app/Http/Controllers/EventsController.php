@@ -15,7 +15,6 @@ class EventsController extends Controller
     public function index(Request $request, EventFilter $filter)
     {
         $events = Event::query();
-
         $events = $filter->apply($events)->with(['tags', 'socials', 'locations'])->inFuture()->paginate(10);
 
         return response()->json($events);
@@ -34,12 +33,12 @@ class EventsController extends Controller
      */
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
-
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'date' => ['required', 'date'],
             'url' => ['sometimes', 'url'],
+            'location' => ['sometimes', 'string', 'max:255'],
             'image_url' => ['sometimes', 'string']], );
 
         if ($validator->fails()) {
@@ -57,7 +56,10 @@ class EventsController extends Controller
         }
 
         $request->merge(['enabled' => false]);
-        $event = Event::query()->create($request->all());
+        $event = Event::query()->create($request->only(['name', 'description', 'date', 'url', 'image_url', 'enabled']));
+        if ($request->get('location')) {
+            $event->locations()->create(['name' => $request->get('location')]);
+        }
 
         //Log::debug('Event created: ' . $event->toJson());
         return response()->json([

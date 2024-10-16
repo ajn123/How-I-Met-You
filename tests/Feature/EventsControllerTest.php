@@ -45,6 +45,7 @@ test('user with permission can create event', function () {
         'description' => fake()->paragraph,
         'date' => \Carbon\Carbon::now()->format('Y-m-d H:i:s'),
         'url' => fake()->url,
+        'location' => fake()->address,
     ];
     $response = $this->actingAs($this->user)->post('/api/events', $data);
     $response->assertCreated();
@@ -54,6 +55,10 @@ test('user with permission can create event', function () {
         'description' => $data['description'],
         'date' => Carbon::make($data['date'])->format('Y-m-d H:i:s'),
         'url' => $data['url'],
+    ]);
+
+    $this->assertDatabaseHas('locations', [
+        'name' => $data['location'],
     ]);
 });
 
