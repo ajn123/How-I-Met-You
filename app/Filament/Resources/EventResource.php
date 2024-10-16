@@ -40,7 +40,12 @@ class EventResource extends Resource
 
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('enabled')
+                    ->options([
+                        '1' => 'Enabled',
+                        '0' => 'Disabled',
+                    ])
+                    ->default('1'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
