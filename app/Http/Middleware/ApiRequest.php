@@ -15,9 +15,9 @@ class ApiRequest
     public function handle(Request $request, Closure $next)
     {
 
-        if ($request->host() != 'localhost') {
-            return response('', 400);
-        }
+        // if ($request->host() != 'localhost') {
+        //     return response('', 400);
+        // }
 
         return $next($request);
     }
