@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Panel;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
