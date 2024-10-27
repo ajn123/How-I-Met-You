@@ -51,13 +51,7 @@ class EventsController extends Controller
         //            return response()->json(['error' => 'Unauthorized'], 401);
         //        }
 
-        //        if ($request->get('image_url')) {
-        //            $urlName = rand(1, 100000).'/500/300final.jpg';
-        //            Storage::put($urlName, ($request->get('image_url')));
-        //            $request->merge(['image_url' => $urlName]);
-        //        }
-
-        if ($request->get('image_url')) {
+        if ($request->get('image_url') && ! str_starts_with($request->get('image_url'), 'https://')) {
             $request->merge(['image_url' => Storage::disk('s3')->url($request->get('image_url'))]);
         }
         $request->merge(['enabled' => false]);
