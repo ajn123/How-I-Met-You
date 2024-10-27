@@ -21,11 +21,18 @@ class EventResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name'),
-                Forms\Components\Textarea::make('description'),
-                Forms\Components\DateTimePicker::make('date'),
-                Forms\Components\TextInput::make('url'),
-                Forms\Components\Checkbox::make('enabled'),
+                Forms\Components\Section::make()
+                    ->schema([
+                        Forms\Components\Checkbox::make('enabled'),
+                        Forms\Components\TextInput::make('name'),
+                        Forms\Components\Textarea::make('description'),
+                        Forms\Components\DateTimePicker::make('date'),
+                        Forms\Components\TextInput::make('url')->label('Website URL'),
+                        Forms\Components\TextInput::make('image_url')
+                            ->url()
+                            ->label('Image URL'),
+                    ])
+                    ->columns(1),
 
             ]);
     }
