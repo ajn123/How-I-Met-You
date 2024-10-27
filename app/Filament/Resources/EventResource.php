@@ -28,9 +28,7 @@ class EventResource extends Resource
                         Forms\Components\Textarea::make('description'),
                         Forms\Components\DateTimePicker::make('date'),
                         Forms\Components\TextInput::make('url')->label('Website URL'),
-                        Forms\Components\TextInput::make('image_url')
-                            ->url()
-                            ->label('Image URL'),
+                        Forms\Components\TextInput::make('image_url')->label('Image URL'),
                     ])
                     ->columns(1),
 
@@ -42,7 +40,7 @@ class EventResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')->searchable(),
-                Tables\Columns\TextColumn::make('date'),
+                Tables\Columns\TextColumn::make('date')->sortable(),
                 Tables\Columns\BooleanColumn::make('enabled')->searchable(),
 
             ])
@@ -61,7 +59,8 @@ class EventResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('date', 'desc');
     }
 
     public static function getRelations(): array
