@@ -49,13 +49,14 @@ class EventsController extends Controller
         //            return response()->json(['error' => 'Unauthorized'], 401);
         //        }
 
-        if ($request->get('image_url')) {
-            $urlName = rand(1, 100000).'/500/300final.jpg';
-            Storage::put($urlName, ($request->get('image_url')));
-            $request->merge(['image_url' => $urlName]);
-        }
+        //        if ($request->get('image_url')) {
+        //            $urlName = rand(1, 100000).'/500/300final.jpg';
+        //            Storage::put($urlName, ($request->get('image_url')));
+        //            $request->merge(['image_url' => $urlName]);
+        //        }
 
         $request->merge(['enabled' => false]);
+
         $event = Event::query()->create($request->only(['name', 'description', 'date', 'url', 'image_url', 'enabled']));
         if ($request->get('location')) {
             $event->locations()->create(['name' => $request->get('location')]);
