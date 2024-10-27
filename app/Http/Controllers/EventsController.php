@@ -15,6 +15,7 @@ class EventsController extends Controller
     public function index(Request $request, EventFilter $filter)
     {
         $events = Event::query();
+
         $events = $filter->apply($events)->with(['tags', 'socials', 'locations'])->inFuture()->paginate(10);
 
         return response()->json($events);
@@ -23,9 +24,9 @@ class EventsController extends Controller
     public function uploadImage(Request $request)
     {
         $path = $request->file('image')->store('events', 's3');
-        Log::debug('image uploaded to: '.Storage::disk()->url($path));
+        Log::debug('image uploaded to: '.Storage::disk('s3')->url($path));
 
-        return response()->json(['url' => Storage::disk()->url($path)], 201);
+        return response()->json(['url' => Storage::disk('s3')->url($path)], 201);
     }
 
     /**
@@ -39,7 +40,8 @@ class EventsController extends Controller
             'date' => ['required', 'date'],
             'url' => ['sometimes', 'url'],
             'location' => ['sometimes', 'string', 'max:255'],
-            'image_url' => ['sometimes', 'string']], );
+            'image_url' => ['sometimes', 'string'],
+        ], );
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->validate()], 422);
@@ -55,6 +57,9 @@ class EventsController extends Controller
         //            $request->merge(['image_url' => $urlName]);
         //        }
 
+        if ($request->get('image_url')) {
+            $request->merge(['image_url' => Storage::disk('s3')->url($request->get('image_url'))]);
+        }
         $request->merge(['enabled' => false]);
 
         $event = Event::query()->create($request->only(['name', 'description', 'date', 'url', 'image_url', 'enabled']));
