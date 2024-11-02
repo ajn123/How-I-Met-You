@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-
         Schema::table('events', function (Blueprint $table) {
-            $table->index('date');
+            $table->index('date', 'EVENTS_DATE_INDEX');
         });
     }
 
@@ -23,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->dropIndex('date');
+            $table->dropIndex('date', 'EVENTS_DATE_INDEX');
         });
     }
 };

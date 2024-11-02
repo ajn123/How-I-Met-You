@@ -21,8 +21,8 @@ class EventFactory extends Factory
             'name' => fake()->name,
             'description' => fake()->text,
             'date' => fake()->dateTimeBetween('-1 year', '+2 year'),
-            'enabled' => true,
             'url' => fake()->url,
+            'enabled' => true,
             // Because we create users with events, this was creating uncessary users, uncomment at your own risk
             // 'user_id' => User::factory()->create(),
         ];

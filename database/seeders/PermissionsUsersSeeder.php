@@ -61,8 +61,11 @@ class PermissionsUsersSeeder extends Seeder
 
         Event::factory()->has(Location::factory())->forEachSequence(
             ...Collection::times(250, function () use ($users) {
-                return ['user_id' => $users->random(),
-                    'image_url' => 'https://kicking-grass-touch-dc.s3.amazonaws.com/events/ACaUh06NFHBNDmw2kKJ696OM8xVEwOJgeSu7Jyqo.jpg', ];
+                return [
+                    'user_id' => $users->random(),
+                    'image_url' => 'https://kicking-grass-touch-dc.s3.amazonaws.com/events/ACaUh06NFHBNDmw2kKJ696OM8xVEwOJgeSu7Jyqo.jpg',
+                    'enabled' => true,
+                ];
             })
         )->create();
 
@@ -82,13 +85,24 @@ class PermissionsUsersSeeder extends Seeder
             'name' => 'Active',
         ]);
 
+        Tag::factory()->create([
+            'name' => 'DC',
+        ]);
+
+        Tag::factory()->create([
+            'name' => 'Maryland',
+        ]);
+
+        Tag::factory()->create([
+            'name' => 'Virginia',
+        ]);
+
+
         Event::all()->each(function (Event $event) {
             $event->tags()->sync(
                 Tag::all()->random(2)->pluck('id')->toArray()
             );
             Social::factory()->count(rand(1, 3))->create(['event_id' => $event->id]);
-
         });
-
     }
 }

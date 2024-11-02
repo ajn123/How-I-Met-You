@@ -14,7 +14,6 @@ uses(Tests\TestCase::class)->in('Feature');
 beforeEach(function () {
     $this->user = User::factory()->create();
     $this->event = Event::factory()->hasTags(1)->hasSocials(2)->futureDates()->withUser($this->user)->create();
-
 });
 
 test('guest can retrieve all events with tag and socials', function () {
@@ -31,8 +30,9 @@ test('guest can retrieve all events with tag and socials', function () {
 test('guest can retrieve single event', function () {
     $response = $this->actingAs($this->user)->get('/api/events/'.$this->event->id);
     $response->assertOk();
-    $response->assertJson(fn (AssertableJson $json) => $json->where('name', $this->event->name)->where('description', $this->event->description)
-        ->etc()
+    $response->assertJson(
+        fn (AssertableJson $json) => $json->where('name', $this->event->name)->where('description', $this->event->description)
+            ->etc()
     );
 });
 
@@ -55,10 +55,28 @@ test('user with permission can create event', function () {
         'description' => $data['description'],
         'date' => Carbon::make($data['date'])->format('Y-m-d H:i:s'),
         'url' => $data['url'],
+        'enabled' => 0,
     ]);
 
     $this->assertDatabaseHas('locations', [
         'name' => $data['location'],
+    ]);
+});
+
+test('user can upload s3 image URL', function () {
+    $imageUrl = 'https://example.com/image.jpg';
+    $response = $this->actingAs($this->user)->post('/api/events', [
+        'name' => fake()->sentence,
+        'description' => fake()->paragraph,
+        'date' => \Carbon\Carbon::now()->format('Y-m-d H:i:s'),
+        'url' => fake()->url,
+        'location' => fake()->address,
+        'image_url' => $imageUrl,
+    ]);
+    $response->assertCreated();
+
+    $this->assertDatabaseHas('events', [
+        'image_url' => $imageUrl,
     ]);
 });
 
@@ -117,8 +135,9 @@ test('can upload images for event and return the url', function () {
 
     $response->assertStatus(201);
 
-    $response->assertJson(fn (AssertableJson $json) => $json
-        ->where('url', $response->json('url'))
-        ->etc()
+    $response->assertJson(
+        fn (AssertableJson $json) => $json
+            ->where('url', $response->json('url'))
+            ->etc()
     );
 });

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('url')->nullable();
             $table->string('image_url')->nullable();
 
-            $table->boolean('enabled')->default(true);
+            $table->boolean('enabled')->default(false);
             $table->foreignIdFor(\App\Models\User::class, 'user_id')->nullable();
             $table->timestamps();
         });

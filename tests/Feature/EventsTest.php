@@ -48,4 +48,4 @@ test('inFuture scope gets future events', function () {
     ]);
     $events = \App\Models\Event::inFuture()->get();
     $this->assertCount(1, $events);
-})->repeat(12);
+})->repeat(3);

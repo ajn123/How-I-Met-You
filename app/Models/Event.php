@@ -11,6 +11,8 @@ class Event extends Model
 {
     use HasFactory;
 
+    const PAGINATION_SIZE = 10;
+
     protected $fillable = [
         'name',
         'description',
