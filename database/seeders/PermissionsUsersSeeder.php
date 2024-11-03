@@ -59,7 +59,7 @@ class PermissionsUsersSeeder extends Seeder
 
         $users = User::factory()->count(4)->create();
 
-        Event::factory()->has(Location::factory())->forEachSequence(
+        Event::factory()->has(Location::factory())->enabled()->forEachSequence(
             ...Collection::times(250, function () use ($users) {
                 return [
                     'user_id' => $users->random(),

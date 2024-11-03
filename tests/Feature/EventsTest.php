@@ -49,3 +49,11 @@ test('inFuture scope gets future events', function () {
     $events = \App\Models\Event::inFuture()->get();
     $this->assertCount(1, $events);
 })->repeat(3);
+
+
+test('a created event defaults to enabled false', function () {
+    $event = Event::factory()->create([
+        'enabled' => false,
+    ]);
+    expect($event->enabled)->toBeFalse();
+});

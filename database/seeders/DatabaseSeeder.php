@@ -31,6 +31,5 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(PermissionsUsersSeeder::class);
-
     }
 }
