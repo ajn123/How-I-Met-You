@@ -97,7 +97,6 @@ class PermissionsUsersSeeder extends Seeder
             'name' => 'Virginia',
         ]);
 
-
         Event::all()->each(function (Event $event) {
             $event->tags()->sync(
                 Tag::all()->random(2)->pluck('id')->toArray()

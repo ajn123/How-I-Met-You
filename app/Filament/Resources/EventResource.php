@@ -43,6 +43,8 @@ class EventResource extends Resource
                 Tables\Columns\TextColumn::make('date')->sortable(),
                 Tables\Columns\BooleanColumn::make('enabled')->searchable(),
 
+                Tables\Columns\ImageColumn::make('image_url')->label('Image URL'),
+
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('enabled')

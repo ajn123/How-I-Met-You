@@ -24,7 +24,7 @@ class EventsController extends Controller
     public function uploadImage(Request $request)
     {
         $path = $request->file('image')->store('events', 's3');
-        Log::debug('image uploaded to: ' . Storage::disk('s3')->url($path));
+        Log::debug('image uploaded to: '.Storage::disk('s3')->url($path));
 
         return response()->json(['url' => Storage::disk('s3')->url($path)], 201);
     }
@@ -41,7 +41,7 @@ class EventsController extends Controller
             'url' => ['sometimes', 'url'],
             'location' => ['sometimes', 'string', 'max:255'],
             'image_url' => ['sometimes', 'string'],
-        ],);
+        ], );
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->validate()], 422);
