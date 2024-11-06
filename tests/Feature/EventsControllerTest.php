@@ -22,16 +22,16 @@ test('guest can retrieve all events with tag and socials', function () {
 
     $response->assertOk();
 
-    $response->assertJson(fn(AssertableJson $json) => $json->has('data', 6)->etc());
-    $response->assertJson(fn(AssertableJson $json) => $json->where('data.0.tags.0.name', Event::inFuture()->first()->tags->first()->name)->etc());
-    $response->assertJson(fn(AssertableJson $json) => $json->where('data.0.socials.0.url', Event::inFuture()->first()->socials->first()->url)->etc());
+    $response->assertJson(fn (AssertableJson $json) => $json->has('data', 6)->etc());
+    $response->assertJson(fn (AssertableJson $json) => $json->where('data.0.tags.0.name', Event::inFuture()->first()->tags->first()->name)->etc());
+    $response->assertJson(fn (AssertableJson $json) => $json->where('data.0.socials.0.url', Event::inFuture()->first()->socials->first()->url)->etc());
 });
 
 test('guest can retrieve single event', function () {
-    $response = $this->actingAs($this->user)->get('/api/events/' . $this->event->id);
+    $response = $this->actingAs($this->user)->get('/api/events/'.$this->event->id);
     $response->assertOk();
     $response->assertJson(
-        fn(AssertableJson $json) => $json->where('name', $this->event->name)->where('description', $this->event->description)
+        fn (AssertableJson $json) => $json->where('name', $this->event->name)->where('description', $this->event->description)
             ->etc()
     );
 });
@@ -103,9 +103,9 @@ test('user can update event', function () {
         'name' => fake()->sentence,
         'description' => fake()->paragraph(3),
     ];
-    $response = $this->actingAs($this->user)->put('/api/events/' . $this->event->id, $data);
+    $response = $this->actingAs($this->user)->put('/api/events/'.$this->event->id, $data);
     $response->assertOk();
-    $response->assertJson(fn(AssertableJson $json) => $json->where('name', $data['name'])
+    $response->assertJson(fn (AssertableJson $json) => $json->where('name', $data['name'])
         ->where('description', $data['description'])->etc());
 });
 
@@ -113,7 +113,7 @@ test('user can delete event', function () {
     Permission::create(['name' => \App\Enums\RolesEnum::DELETE_EVENTS]);
     $this->user->givePermissionTo(RolesEnum::DELETE_EVENTS);
     $this->assertDatabaseCount('events', 1);
-    $response = $this->actingAs($this->user)->delete('/api/events/' . $this->event->id);
+    $response = $this->actingAs($this->user)->delete('/api/events/'.$this->event->id);
     $response->assertNoContent();
     $this->assertDatabaseCount('events', 0);
 });
@@ -121,7 +121,7 @@ test('user can delete event', function () {
 test('user can Not delete event because they don\'t have permission', function () {
     Permission::create(['name' => \App\Enums\RolesEnum::DELETE_EVENTS]);
     $this->assertDatabaseCount('events', 1);
-    $response = $this->actingAs($this->user)->delete('/api/events/' . $this->event->id);
+    $response = $this->actingAs($this->user)->delete('/api/events/'.$this->event->id);
     $response->assertStatus(401);
     $this->assertDatabaseCount('events', 1);
 });
