@@ -10,15 +10,17 @@ An app to manage events as well as let users create events to stay up to date in
 
 
 # Get Me Running
-- Make sure you have Docker Desktop application and after you clone the app, cd into it and run the following command:
 ```
-docker run --rm \
-    -u "$(id -u):$(id -g)" \
-    -v "$(pwd):/var/www/html" \
-    -w /var/www/html \
-    laravelsail/php83-composer:latest \
-    composer install --ignore-platform-reqs 
+ php artisan serve
 ```
+
+# Swagger
+We use [swagger](https://github.com/DarkaOnLine/L5-Swagger/wiki/Installation-&-Configuration) to document the api endpoints.
+```
+php artisan l5-swagger:generate
+```
+and navigate to `http://localhost:8000/api/documentation` to view the swagger docs
+
 
 ## Seeding
 - Run the `sail artisan db:seed` command
@@ -26,7 +28,7 @@ docker run --rm \
 ## Run Tests
 - tests will empty the database upon each run, reseed it to bring back testing data
 ```shell
-sail test
+php artisan test
 ```
 
 ## Run Pint

@@ -10,8 +10,18 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * @OA\Info(title="Event API", version="1.0")
+ */
 class EventsController extends Controller
 {
+    /**
+     * @OA\Get(
+     *     path="api/events",
+     *     summary="Get all events",
+     *     @OA\Response(response=200, description="List of events")
+     * )
+     */
     public function index(Request $request, EventFilter $filter)
     {
         $events = Event::query();
@@ -24,13 +34,22 @@ class EventsController extends Controller
     public function uploadImage(Request $request)
     {
         $path = $request->file('image')->store('events', 's3');
-        Log::debug('image uploaded to: '.Storage::disk('s3')->url($path));
+        Log::debug('image uploaded to: ' . Storage::disk('s3')->url($path));
 
         return response()->json(['url' => Storage::disk('s3')->url($path)], 201);
     }
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @OA\Post(
+     *     path="api/events",
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(ref="#/components/schemas/Event")
+     *     ),
+     *     summary="Create a new event",
+     *     @OA\Response(response=201, description="Event created successfully")
+     * )
      */
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
@@ -41,7 +60,7 @@ class EventsController extends Controller
             'url' => ['sometimes', 'url'],
             'location' => ['sometimes', 'string', 'max:255'],
             'image_url' => ['sometimes', 'string'],
-        ], );
+        ],);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->validate()], 422);
@@ -70,6 +89,14 @@ class EventsController extends Controller
         ], 201);
     }
 
+
+    /**
+     * @OA\Get(
+     *     path="api/events/{id}",
+     *     summary="Get an event",
+     *     @OA\Response(response=200, description="Event details")
+     * )
+     */
     public function show(Event $event)
     {
         if (! $event) {
@@ -79,6 +106,13 @@ class EventsController extends Controller
         return response()->json($event);
     }
 
+    /**
+     * @OA\Put(
+     *     path="api/events/{id}",
+     *     summary="Update an event",
+     *     @OA\Response(response=200, description="Event updated successfully")
+     * )
+     */
     public function update(Request $request, Event $event)
     {
         if (! $event) {
@@ -96,6 +130,8 @@ class EventsController extends Controller
     /**
      * Delete an event.  Can only be done by the creator. and if you have the delete
      * events permission.
+     *
+     * @OA\Delete(
      *
      * @return \Illuminate\Http\JsonResponse
      */
