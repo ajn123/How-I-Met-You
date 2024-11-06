@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Validator;
 
 /**
  * @OA\Info(title="Event API", version="1.0")
+ * @OA\SecurityScheme(
+ *     securityScheme="bearerAuth",
+ *     type="http",
+ *     scheme="bearer",
+ *     bearerFormat="JWT"
+ * )
  */
 class EventsController extends Controller
 {
@@ -44,9 +50,6 @@ class EventsController extends Controller
      *
      * @OA\Post(
      *     path="api/events",
-     *     @OA\RequestBody(
-     *         @OA\JsonContent(ref="#/components/schemas/Event")
-     *     ),
      *     summary="Create a new event",
      *     @OA\Response(response=201, description="Event created successfully")
      * )
@@ -132,8 +135,10 @@ class EventsController extends Controller
      * events permission.
      *
      * @OA\Delete(
-     *
-     * @return \Illuminate\Http\JsonResponse
+     *     path="api/events/{id}",
+     *     summary="Delete an event",
+     *     @OA\Response(response=204, description="Event deleted successfully")
+     * )
      */
     public function destroy(Request $request, Event $event)
     {

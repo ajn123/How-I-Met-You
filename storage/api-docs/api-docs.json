@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "User API",
+        "title": "Event API",
         "version": "1.0"
     },
     "paths": {
@@ -14,6 +14,66 @@
                         "description": "List of events"
                     }
                 }
+            },
+            "post": {
+                "summary": "Create a new event",
+                "description": "Store a newly created resource in storage.",
+                "operationId": "ad440355f853b1812ef85d6d75fca9de",
+                "responses": {
+                    "201": {
+                        "description": "Event created successfully"
+                    }
+                }
+            }
+        },
+        "api/events/{id}": {
+            "get": {
+                "summary": "Get an event",
+                "operationId": "313b1a276607100c93e1863e115873fd",
+                "responses": {
+                    "200": {
+                        "description": "Event details"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update an event",
+                "operationId": "aa41aa06708760a46db4bf36e194c1b2",
+                "responses": {
+                    "200": {
+                        "description": "Event updated successfully"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete an event",
+                "description": "Delete an event.  Can only be done by the creator. and if you have the delete\nevents permission.",
+                "operationId": "70400b0cff523f52a31ddd6e14bb2ae6",
+                "responses": {
+                    "204": {
+                        "description": "Event deleted successfully"
+                    }
+                }
+            }
+        },
+        "api/tags": {
+            "get": {
+                "summary": "Get all tags",
+                "operationId": "b96f2adb043eb962d670c9340bb3ad1c",
+                "responses": {
+                    "200": {
+                        "description": "List of tags"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     }

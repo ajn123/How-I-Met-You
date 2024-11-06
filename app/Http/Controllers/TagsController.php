@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Tag;
 
-/**
- * @OA\Info(title="Tag API", version="1.0")
- */
 class TagsController extends Controller
 {
     /**
