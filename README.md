@@ -3,10 +3,11 @@ An app to manage events as well as let users create events to stay up to date in
 
 # Features 
 - Permissions using [spatie/laravel-permission](https://github.com/spatie/laravel-permission)
-- Ziggy
+- [Ziggy](https://github.com/tighten/ziggy)
 - React
-- Inertia
+- [Inertia](https://inertiajs.com/)
 - Typescript
+- [Tailwind](https://tailwindcss.com/)
 
 
 # Get Me Running
