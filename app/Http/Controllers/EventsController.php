@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 /**
  * @OA\Info(title="Event API", version="1.0")
+ *
  * @OA\SecurityScheme(
  *     securityScheme="bearerAuth",
  *     type="http",
@@ -25,6 +26,7 @@ class EventsController extends Controller
      * @OA\Get(
      *     path="api/events",
      *     summary="Get all events",
+     *
      *     @OA\Response(response=200, description="List of events")
      * )
      */
@@ -40,7 +42,7 @@ class EventsController extends Controller
     public function uploadImage(Request $request)
     {
         $path = $request->file('image')->store('events', 's3');
-        Log::debug('image uploaded to: ' . Storage::disk('s3')->url($path));
+        Log::debug('image uploaded to: '.Storage::disk('s3')->url($path));
 
         return response()->json(['url' => Storage::disk('s3')->url($path)], 201);
     }
@@ -51,6 +53,7 @@ class EventsController extends Controller
      * @OA\Post(
      *     path="api/events",
      *     summary="Create a new event",
+     *
      *     @OA\Response(response=201, description="Event created successfully")
      * )
      */
@@ -63,7 +66,7 @@ class EventsController extends Controller
             'url' => ['sometimes', 'url'],
             'location' => ['sometimes', 'string', 'max:255'],
             'image_url' => ['sometimes', 'string'],
-        ],);
+        ], );
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->validate()], 422);
@@ -92,11 +95,11 @@ class EventsController extends Controller
         ], 201);
     }
 
-
     /**
      * @OA\Get(
      *     path="api/events/{id}",
      *     summary="Get an event",
+     *
      *     @OA\Response(response=200, description="Event details")
      * )
      */
@@ -113,6 +116,7 @@ class EventsController extends Controller
      * @OA\Put(
      *     path="api/events/{id}",
      *     summary="Update an event",
+     *
      *     @OA\Response(response=200, description="Event updated successfully")
      * )
      */
@@ -137,6 +141,7 @@ class EventsController extends Controller
      * @OA\Delete(
      *     path="api/events/{id}",
      *     summary="Delete an event",
+     *
      *     @OA\Response(response=204, description="Event deleted successfully")
      * )
      */

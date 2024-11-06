@@ -10,6 +10,7 @@ class TagsController extends Controller
      * @OA\Get(
      *     path="api/tags",
      *     summary="Get all tags",
+     *
      *     @OA\Response(response=200, description="List of tags")
      * )
      */
