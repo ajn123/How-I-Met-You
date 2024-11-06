@@ -31,6 +31,11 @@ and navigate to `http://localhost:8000/api/documentation` to view the swagger do
 php artisan test
 ```
 
+## Seeding the database
+```
+php artisan db:seed
+```
+
 ## Run Pint
 run `./vendor/bin/pint` for code formatting 
 
